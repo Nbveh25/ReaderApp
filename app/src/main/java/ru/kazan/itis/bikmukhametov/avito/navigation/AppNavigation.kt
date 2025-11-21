@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import ru.kazan.itis.bikmukhametov.feature.auth.presentation.screen.login.LoginScreen
+import ru.kazan.itis.bikmukhametov.feature.auth.presentation.LoginScreen
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.downloaded.DownloadedBooksScreen
 import ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.ReadingScreen
 
