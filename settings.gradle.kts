@@ -21,4 +21,14 @@ dependencyResolutionManagement {
 
 rootProject.name = "Avito"
 include(":app")
- 
+include(":core")
+include(":core:ui")
+include(":feature")
+
+include(":feature:auth")
+include(":feature:books")
+include(":feature:profile")
+include(":feature:reading")
+include(":feature:upload")
+include(":feature:auth:api")
+include(":feature:auth:impl")

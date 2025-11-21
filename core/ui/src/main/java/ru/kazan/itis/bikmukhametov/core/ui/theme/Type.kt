@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.avito.ui.theme
+package ru.kazan.itis.bikmukhametov.core.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -32,3 +32,4 @@ val Typography = Typography(
     )
     */
 )
+
