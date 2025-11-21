@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Avito"
-        android:name=".AvitoApplication">
+        android:name=".app.AvitoApplication">
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -44,6 +44,7 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+
     implementation(project(":feature:auth:impl"))
     implementation(project(":feature:books:impl"))
     implementation(project(":feature:reading:impl"))
