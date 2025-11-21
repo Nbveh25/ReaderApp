@@ -44,10 +44,17 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":feature:auth:impl"))
+    implementation(project(":feature:books:impl"))
+    implementation(project(":feature:reading:impl"))
 
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
+
+    // Navigation
+    implementation(libs.navigation)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
