@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_title">Вход</string>
+    <string name="auth_registration_action">Регистрация</string>
+    <string name="auth_brand_title">Avito</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Пароль</string>
+    <string name="error_invalid_email">Некорректный email</string>
+    <string name="auth_remember_me">Запомнить меня</string>
+    <string name="auth_primary_button">Войти</string>
+    <string name="auth_retry_button">Повторить</string>
+    <string name="auth_google_button">Войти через Google</string>
+</resources>
+
