@@ -1,0 +1,16 @@
+package ru.kazan.itis.bikmukhametov.feature.books.domain.usecase
+
+import ru.kazan.itis.bikmukhametov.feature.books.api.model.BookModel
+import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
+import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.GetBooksUseCase
+import javax.inject.Inject
+
+class GetBooksUseCaseImpl @Inject constructor(
+    private val bookRepository: BookRepository
+) : GetBooksUseCase {
+
+    override suspend fun invoke(): List<BookModel> {
+        return bookRepository.getBooks()
+    }
+}
+

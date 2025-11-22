@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="books_title">Книги</string>
+    <string name="books_search_placeholder">Поиск...</string>
+    <string name="books_empty">Нет доступных книг</string>
+    <string name="books_empty_search">Ничего не найдено</string>
+    <string name="books_retry">Повторить</string>
+    <string name="books_delete_success">Удалить</string>
+    <string name="books_download_success">Скачать</string>
+</resources>
+

@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import ru.kazan.itis.bikmukhametov.feature.auth.presentation.screen.auth.AuthScreen
-import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.downloaded.DownloadedBooksScreen
+import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.BooksScreen
 import ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.ReadingScreen
 
 @Composable
@@ -44,7 +44,7 @@ fun AppNavigation(
         }
 
         composable(Routes.BOOKS) {
-            DownloadedBooksScreen(
+            BooksScreen(
                 onNavigateToReading = { bookId ->
                     navController.navigate("${Routes.READING}/$bookId")
                 }
