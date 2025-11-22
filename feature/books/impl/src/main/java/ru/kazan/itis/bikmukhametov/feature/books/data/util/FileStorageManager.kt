@@ -3,7 +3,7 @@ package ru.kazan.itis.bikmukhametov.feature.books.data.util
 import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import ru.kazan.itis.bikmukhametov.feature.books.api.util.BookFormat
+import ru.kazan.itis.bikmukhametov.util.enum.BookFormat
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException

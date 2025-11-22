@@ -1,6 +1,7 @@
 package ru.kazan.itis.bikmukhametov.feature.books.api.datasource.remote
 
-import ru.kazan.itis.bikmukhametov.feature.books.api.util.BookFormat
+import ru.kazan.itis.bikmukhametov.util.enum.BookFormat
+
 
 interface BookDownloader {
 

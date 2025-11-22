@@ -5,8 +5,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import ru.kazan.itis.bikmukhametov.util.enum.BookFormat
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.remote.BookDownloader as BookDownloaderContract
-import ru.kazan.itis.bikmukhametov.feature.books.api.util.BookFormat
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton

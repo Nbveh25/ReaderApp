@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -19,17 +20,18 @@ import androidx.compose.ui.unit.dp
  * Кастомная реализация AppBar для обхода аннотации @OptIn.
  *
  * @param title Текст заголовка.
+ * @param navigationIcon Иконка навигации (например, кнопка "Назад").
  * @param endContent Контент, который размещается справа (например, кнопка регистрации).
  */
 @Composable
 fun AppTopBar(
     title: String,
+    navigationIcon: @Composable (() -> Unit)? = null,
     endContent: @Composable () -> Unit = {}
 ) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceVariant,
         tonalElevation = 2.dp, // Небольшая тень для визуального разделения
-        modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars)
     ) {
         Row(
             modifier = Modifier
@@ -38,6 +40,10 @@ fun AppTopBar(
                 .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Иконка навигации
+            if (navigationIcon != null) {
+                navigationIcon()
+            }
             // Заголовок
             Text(
                 text = title,

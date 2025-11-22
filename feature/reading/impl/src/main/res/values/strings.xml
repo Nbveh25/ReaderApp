@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Reading Screen -->
+    <string name="reading_title">Чтение книги</string>
+    <string name="reading_back">Назад</string>
+    <string name="reading_settings_button">АА</string>
+    <string name="reading_unknown_error">Неизвестная ошибка</string>
+    <string name="reading_book_deleted">Книга удалена</string>
+    
+    <!-- Reading Error State -->
+    <string name="reading_error_title">Ошибка</string>
+    <string name="reading_error_retry">Повторить</string>
+    <string name="reading_error_delete">Удалить книгу</string>
+    
+    <!-- Reading Progress Indicator -->
+    <string name="reading_progress_read">%1$d%% прочитано</string>
+    
+    <!-- Reading Settings Sheet -->
+    <string name="reading_settings_title">Настройки чтения</string>
+    <string name="reading_settings_font_size">Размер шрифта</string>
+    <string name="reading_settings_line_spacing">Интервал между строками</string>
+    <string name="reading_settings_theme">Тема</string>
+    <string name="reading_settings_theme_light">Светлая</string>
+    <string name="reading_settings_theme_dark">Тёмная</string>
+    
+    <!-- Reading ViewModel Errors -->
+    <string name="reading_error_load_book">Ошибка загрузки книги</string>
+    <string name="reading_error_book_not_downloaded">Книга не скачана. Пожалуйста, скачайте книгу перед чтением.</string>
+    <string name="reading_error_read_file">Ошибка чтения файла</string>
+    <string name="reading_error_delete_failed">Не удалось удалить книгу</string>
+    <string name="reading_error_delete_with_message">Ошибка при удалении: %1$s</string>
+    
+    <!-- Reading UseCase Errors -->
+    <string name="reading_error_book_not_found">Книга не найдена</string>
+    <string name="reading_error_file_not_found">Файл не найден: %1$s</string>
+    <string name="reading_error_pdf_not_supported">Формат PDF пока не поддерживается. Используйте формат TXT или EPUB.</string>
+    <string name="reading_error_epub_not_supported">Формат EPUB пока не поддерживается. Используйте формат TXT.</string>
+</resources>
+

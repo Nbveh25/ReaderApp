@@ -40,6 +40,8 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
+    implementation(project(":core:model"))
+    implementation(project(":core:util"))
     implementation(project(":feature:books:api"))
 
     // Firebase
@@ -72,7 +74,6 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
-    //implementation(libs.coil.okhttp)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

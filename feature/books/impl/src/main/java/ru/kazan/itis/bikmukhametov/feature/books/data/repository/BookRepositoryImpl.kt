@@ -2,8 +2,8 @@ package ru.kazan.itis.bikmukhametov.feature.books.data.repository
 
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.local.LocalBookDataSource
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.remote.RemoteBookDataSource
-import ru.kazan.itis.bikmukhametov.feature.books.api.model.BookModel
 import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
+import ru.kazan.itis.bikmukhametov.model.BookModel
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(
@@ -38,6 +38,19 @@ class BookRepositoryImpl @Inject constructor(
                 isDownloaded = isDownloaded,
                 localFilePath = localFilePath
             )
+        }
+    }
+
+    override suspend fun deleteBook(bookId: String): Result<Boolean> {
+        return try {
+            val deleted = localBookDataSource.deleteBook(bookId)
+            if (deleted) {
+                Result.success(true)
+            } else {
+                Result.failure(Exception("Не удалось удалить книгу"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

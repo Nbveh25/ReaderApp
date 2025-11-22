@@ -1,8 +1,8 @@
 package ru.kazan.itis.bikmukhametov.feature.books.domain.usecase
 
-import ru.kazan.itis.bikmukhametov.feature.books.api.model.BookModel
 import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.GetBooksUseCase
+import ru.kazan.itis.bikmukhametov.model.BookModel
 import javax.inject.Inject
 
 class GetBooksUseCaseImpl @Inject constructor(

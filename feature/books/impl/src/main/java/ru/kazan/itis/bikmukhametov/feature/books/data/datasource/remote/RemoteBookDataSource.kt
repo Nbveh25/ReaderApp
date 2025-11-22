@@ -3,9 +3,9 @@ package ru.kazan.itis.bikmukhametov.feature.books.data.datasource.remote
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import ru.kazan.itis.bikmukhametov.model.BookModel
+import ru.kazan.itis.bikmukhametov.util.enum.BookFormat
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.remote.RemoteBookDataSource as RemoteBookDataSourceContract
-import ru.kazan.itis.bikmukhametov.feature.books.api.model.BookModel
-import ru.kazan.itis.bikmukhametov.feature.books.api.util.BookFormat
 import javax.inject.Inject
 import javax.inject.Singleton
 
