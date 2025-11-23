@@ -12,12 +12,14 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import android.net.Uri
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.GetUserProfileUseCase
+import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SignOutUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UpdateUserNameUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UploadProfilePhotoUseCase
+import java.io.ByteArrayInputStream
 import java.io.IOException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,6 +27,7 @@ class ProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val updateUserNameUseCase: UpdateUserNameUseCase,
     private val uploadProfilePhotoUseCase: UploadProfilePhotoUseCase,
+    private val selectImageUseCase: SelectImageUseCase,
     private val signOutUseCase: SignOutUseCase
 ) : ViewModel() {
 
@@ -42,7 +45,7 @@ class ProfileViewModel @Inject constructor(
         when (intent) {
             is ProfileIntent.LoadProfile -> loadProfile()
             is ProfileIntent.PhotoClick -> handlePhotoClick()
-            is ProfileIntent.PhotoSelected -> handlePhotoSelected(intent.inputStream, intent.fileName)
+            is ProfileIntent.PhotoSelected -> handlePhotoSelected(intent.imageUri)
             is ProfileIntent.NameChanged -> handleNameChanged(intent.name)
             is ProfileIntent.UpdateNameClicked -> handleUpdateName()
             is ProfileIntent.LogoutClicked -> handleLogout()
@@ -87,7 +90,7 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun handlePhotoSelected(inputStream: java.io.InputStream, fileName: String) {
+    private fun handlePhotoSelected(imageUri: Uri) {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
@@ -97,33 +100,42 @@ class ProfileViewModel @Inject constructor(
             }
 
             try {
-                // Используем use для автоматического закрытия потока
-                inputStream.use { stream ->
-                    uploadProfilePhotoUseCase.invoke(stream, fileName)
-                        .onSuccess { photoUrl ->
-                            // Обновляем профиль с новым URL фото
-                            val currentProfile = _uiState.value.userProfile
-                            Log.d("ProfileViewModel", "URL загруженного файла: $photoUrl")
+                val imageUriString = imageUri.toString()
 
-                            if (currentProfile != null) {
-                                _uiState.update {
-                                    it.copy(
-                                        userProfile = currentProfile.copy(photoUrl = photoUrl),
-                                        isUploadingPhoto = false
-                                    )
+                selectImageUseCase.invoke(imageUriString)
+                    .onSuccess { imageModel ->
+
+                        val inputStream = ByteArrayInputStream(imageModel.bytes)
+
+                        uploadProfilePhotoUseCase.invoke(inputStream, imageModel.fileName)
+                            .onSuccess { photoUrl ->
+
+                                val currentProfile = _uiState.value.userProfile
+                                Log.d("ProfileViewModel", "URL загруженного файла: $photoUrl")
+
+                                if (currentProfile != null) {
+                                    _uiState.update {
+                                        it.copy(
+                                            userProfile = currentProfile.copy(photoUrl = photoUrl),
+                                            isUploadingPhoto = false
+                                        )
+                                    }
+                                } else {
+                                    _uiState.update { it.copy(isUploadingPhoto = false) }
                                 }
-                            } else {
-                                _uiState.update { it.copy(isUploadingPhoto = false) }
+                                _effect.emit(ProfileEffect.ShowMessage("Фото успешно загружено"))
+
+                                loadProfile()
                             }
-                            _effect.emit(ProfileEffect.ShowMessage("Фото успешно загружено"))
-                            // Перезагружаем профиль для синхронизации
-                            loadProfile()
-                        }
-                        .onFailure { error ->
-                            _uiState.update { it.copy(isUploadingPhoto = false) }
-                            handleError(error)
-                        }
-                }
+                            .onFailure { error ->
+                                _uiState.update { it.copy(isUploadingPhoto = false) }
+                                handleError(error)
+                            }
+                    }
+                    .onFailure { error ->
+                        _uiState.update { it.copy(isUploadingPhoto = false) }
+                        handleError(error)
+                    }
             } catch (e: Exception) {
                 _uiState.update { it.copy(isUploadingPhoto = false) }
                 handleError(e)
@@ -155,7 +167,6 @@ class ProfileViewModel @Inject constructor(
             try {
                 updateUserNameUseCase.invoke(name)
                     .onSuccess {
-                        // Обновляем профиль с новым именем
                         val currentProfile = _uiState.value.userProfile
                         if (currentProfile != null) {
                             _uiState.update {
@@ -168,7 +179,7 @@ class ProfileViewModel @Inject constructor(
                             _uiState.update { it.copy(isUpdatingName = false) }
                         }
                         _effect.emit(ProfileEffect.ShowMessage("Имя успешно обновлено"))
-                        // Перезагружаем профиль для синхронизации
+
                         loadProfile()
                     }
                     .onFailure { error ->
@@ -196,26 +207,7 @@ class ProfileViewModel @Inject constructor(
     private fun handleError(error: Throwable) {
         Log.e("ProfileViewModel", "Ошибка: ${error.message}", error)
         
-        val isNetworkError = error is IOException ||
-                error is UnknownHostException ||
-                (error.message?.contains("сеть", ignoreCase = true) == true &&
-                 error.message?.contains("аутентификации", ignoreCase = true) != true &&
-                 error.message?.contains("Доступ запрещен", ignoreCase = true) != true) ||
-                (error.message?.contains("network", ignoreCase = true) == true &&
-                 error.message?.contains("authentication", ignoreCase = true) != true &&
-                 error.message?.contains("forbidden", ignoreCase = true) != true) ||
-                error.message?.contains("интернет", ignoreCase = true) == true
-
-        val errorMsg = when {
-            error.message?.contains("аутентификации", ignoreCase = true) == true ||
-            error.message?.contains("authentication", ignoreCase = true) == true -> 
-                error.message ?: "Ошибка аутентификации"
-            error.message?.contains("Доступ запрещен", ignoreCase = true) == true ||
-            error.message?.contains("forbidden", ignoreCase = true) == true -> 
-                error.message ?: "Доступ запрещен"
-            isNetworkError -> "Ошибка сети. Проверьте подключение к интернету"
-            else -> error.message ?: "Произошла ошибка"
-        }
+        val errorMsg = error.message ?: "Произошла ошибка"
 
         _uiState.update {
             it.copy(

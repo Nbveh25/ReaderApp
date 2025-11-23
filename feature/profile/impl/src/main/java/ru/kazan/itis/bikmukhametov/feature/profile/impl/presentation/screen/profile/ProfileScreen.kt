@@ -23,7 +23,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -33,7 +32,6 @@ import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTextField
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTopBar
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.ProfileAvatar
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.UserInfoCard
-import java.io.InputStream
 
 @Composable
 fun ProfileScreen(
@@ -42,7 +40,6 @@ fun ProfileScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
-    val context = LocalContext.current
 
     // Обработка эффектов
     LaunchedEffect(Unit) {
@@ -65,18 +62,8 @@ fun ProfileScreen(
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        uri?.let {
-            try {
-                val inputStream: InputStream? = context.contentResolver.openInputStream(it)
-                val fileName = it.lastPathSegment ?: "profile_photo.jpg"
-                inputStream?.let { stream ->
-                    viewModel.onIntent(
-                        ProfileIntent.PhotoSelected(stream, fileName)
-                    )
-                }
-            } catch (e: Exception) {
-                viewModel.onIntent(ProfileIntent.RetryClicked)
-            }
+        uri?.let { selectedUri ->
+            viewModel.onIntent(ProfileIntent.PhotoSelected(selectedUri))
         }
     }
 
