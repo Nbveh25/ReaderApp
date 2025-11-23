@@ -18,6 +18,8 @@ import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCas
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SignOutUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UpdateUserNameUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UploadProfilePhotoUseCase
+import ru.kazan.itis.bikmukhametov.feature.profile.impl.R
+import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import javax.inject.Inject
@@ -28,7 +30,8 @@ class ProfileViewModel @Inject constructor(
     private val updateUserNameUseCase: UpdateUserNameUseCase,
     private val uploadProfilePhotoUseCase: UploadProfilePhotoUseCase,
     private val selectImageUseCase: SelectImageUseCase,
-    private val signOutUseCase: SignOutUseCase
+    private val signOutUseCase: SignOutUseCase,
+    private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileState())
@@ -123,7 +126,7 @@ class ProfileViewModel @Inject constructor(
                                 } else {
                                     _uiState.update { it.copy(isUploadingPhoto = false) }
                                 }
-                                _effect.emit(ProfileEffect.ShowMessage("Фото успешно загружено"))
+                                _effect.emit(ProfileEffect.ShowMessage(stringResourceProvider.getString(R.string.profile_message_photo_uploaded)))
 
                                 loadProfile()
                             }
@@ -151,7 +154,7 @@ class ProfileViewModel @Inject constructor(
         val name = _uiState.value.nameInput.trim()
         if (name.isBlank()) {
             viewModelScope.launch {
-                _effect.emit(ProfileEffect.ShowMessage("Имя не может быть пустым"))
+                _effect.emit(ProfileEffect.ShowMessage(stringResourceProvider.getString(R.string.profile_error_name_empty)))
             }
             return
         }
@@ -178,7 +181,7 @@ class ProfileViewModel @Inject constructor(
                         } else {
                             _uiState.update { it.copy(isUpdatingName = false) }
                         }
-                        _effect.emit(ProfileEffect.ShowMessage("Имя успешно обновлено"))
+                        _effect.emit(ProfileEffect.ShowMessage(stringResourceProvider.getString(R.string.profile_message_name_updated)))
 
                         loadProfile()
                     }
@@ -207,7 +210,7 @@ class ProfileViewModel @Inject constructor(
     private fun handleError(error: Throwable) {
         Log.e("ProfileViewModel", "Ошибка: ${error.message}", error)
         
-        val errorMsg = error.message ?: "Произошла ошибка"
+        val errorMsg = error.message ?: stringResourceProvider.getString(R.string.profile_error_occurred)
 
         _uiState.update {
             it.copy(

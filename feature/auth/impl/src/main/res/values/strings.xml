@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Auth Screen -->
     <string name="auth_title">Вход</string>
     <string name="auth_registration_action">Регистрация</string>
     <string name="auth_brand_title">Avito</string>
@@ -10,5 +11,11 @@
     <string name="auth_primary_button">Войти</string>
     <string name="auth_retry_button">Повторить</string>
     <string name="auth_google_button">Войти через Google</string>
+    
+    <!-- Auth ViewModel Messages -->
+    <string name="auth_message_validate_email_password">Проверьте корректность Email и Пароля</string>
+    <string name="auth_message_login_success">Успешный вход</string>
+    <string name="auth_error_network">Ошибка сети. Проверьте подключение к интернету</string>
+    <string name="auth_error_login">Ошибка входа</string>
 </resources>
 

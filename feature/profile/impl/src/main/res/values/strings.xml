@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Profile Screen -->
+    <string name="profile_title">Профиль</string>
+    
+    <!-- Profile ViewModel Messages -->
+    <string name="profile_message_photo_uploaded">Фото успешно загружено</string>
+    <string name="profile_error_name_empty">Имя не может быть пустым</string>
+    <string name="profile_message_name_updated">Имя успешно обновлено</string>
+    <string name="profile_error_occurred">Произошла ошибка</string>
+    <string name="profile_error_unknown">Неизвестная ошибка</string>
+    
+    <!-- Profile UI -->
+    <string name="profile_retry">Повторить</string>
+    <string name="profile_name_label">Имя</string>
+    <string name="profile_save_name">Сохранить имя</string>
+    <string name="profile_not_specified">Не указано</string>
+    <string name="profile_logout">Выйти из аккаунта</string>
+    <string name="profile_photo_content_description">Фото пользователя</string>
+    <string name="profile_photo_placeholder_content_description">Заглушка фото</string>
+    <string name="profile_email_label">Email</string>
+    <string name="profile_phone_label">Телефон</string>
+</resources>
+

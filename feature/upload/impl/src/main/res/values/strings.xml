@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Upload Screen -->
+    <string name="upload_title">Загрузка книги</string>
+    
+    <!-- Upload ViewModel Messages -->
+    <string name="upload_error_read_file">Ошибка чтения файла</string>
+    <string name="upload_message_select_file">Выберите файл для загрузки</string>
+    <string name="upload_message_user_not_authorized">Пользователь не авторизован</string>
+    <string name="upload_error_failed_to_read_file">Не удалось прочитать файл</string>
+    <string name="upload_error_validation_failed">Ошибка валидации файла</string>
+    <string name="upload_message_success">Книга успешно загружена</string>
+    <string name="upload_error_upload_failed">Ошибка загрузки книги</string>
+    <string name="upload_error_upload">Ошибка загрузки</string>
+    <string name="upload_error_occurred">Произошла ошибка</string>
+</resources>
+

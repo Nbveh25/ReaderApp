@@ -23,9 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import ru.kazan.itis.bikmukhametov.feature.profile.impl.R
 
 @Composable
 fun ProfileAvatar(
@@ -44,7 +46,7 @@ fun ProfileAvatar(
         if (photoUrl != null && photoUrl.isNotEmpty()) {
             AsyncImage(
                 model = photoUrl,
-                contentDescription = "Фото пользователя",
+                contentDescription = stringResource(R.string.profile_photo_content_description),
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(CircleShape),
@@ -54,7 +56,7 @@ fun ProfileAvatar(
             // Заглушка с иконкой пользователя
             Icon(
                 imageVector = Icons.Default.Person,
-                contentDescription = "Заглушка фото",
+                contentDescription = stringResource(R.string.profile_photo_placeholder_content_description),
                 modifier = Modifier.size(60.dp),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -101,20 +103,20 @@ fun UserInfoCard(
         ) {
             // Имя пользователя
             UserInfoItem(
-                label = "Имя",
+                label = stringResource(R.string.profile_name_label),
                 value = userName
             )
 
             // Email
             UserInfoItem(
-                label = "Email",
+                label = stringResource(R.string.profile_email_label),
                 value = userEmail
             )
 
             // Телефон (если есть)
             if (userPhone != null && userPhone.isNotEmpty()) {
                 UserInfoItem(
-                    label = "Телефон",
+                    label = stringResource(R.string.profile_phone_label),
                     value = userPhone
                 )
             }

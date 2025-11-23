@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -30,6 +31,7 @@ import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppOutlinedButton
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppPrimaryButton
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTextField
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTopBar
+import ru.kazan.itis.bikmukhametov.feature.profile.impl.R
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.ProfileAvatar
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.UserInfoCard
 
@@ -71,7 +73,7 @@ fun ProfileScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             AppTopBar(
-                title = "Профиль"
+                title = stringResource(R.string.profile_title)
             )
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -82,7 +84,7 @@ fun ProfileScreen(
             }
             uiState.error != null && uiState.userProfile == null -> {
                 ErrorState(
-                    error = uiState.error ?: "Неизвестная ошибка",
+                    error = uiState.error ?: stringResource(R.string.profile_error_unknown),
                     onRetry = { viewModel.onIntent(ProfileIntent.RetryClicked) }
                 )
             }
@@ -133,7 +135,7 @@ private fun ErrorState(
             )
             Spacer(modifier = Modifier.height(16.dp))
             AppOutlinedButton(
-                text = "Повторить",
+                text = stringResource(R.string.profile_retry),
                 onClick = onRetry
             )
         }
@@ -173,7 +175,7 @@ private fun ProfileContent(
         AppTextField(
             value = state.nameInput,
             onValueChange = { onIntent(ProfileIntent.NameChanged(it)) },
-            label = "Имя",
+            label = stringResource(R.string.profile_name_label),
             enabled = !state.isUpdatingName,
             modifier = Modifier.fillMaxWidth()
         )
@@ -182,7 +184,7 @@ private fun ProfileContent(
 
         // Кнопка сохранения имени
         AppPrimaryButton(
-            text = "Сохранить имя",
+            text = stringResource(R.string.profile_save_name),
             onClick = { onIntent(ProfileIntent.UpdateNameClicked) },
             enabled = !state.isUpdatingName && state.nameInput.trim().isNotEmpty(),
             isLoading = state.isUpdatingName,
@@ -194,8 +196,8 @@ private fun ProfileContent(
         // Информация о пользователе
         if (profile != null) {
             UserInfoCard(
-                userName = profile.name ?: "Не указано",
-                userEmail = profile.email ?: "Не указано",
+                userName = profile.name ?: stringResource(R.string.profile_not_specified),
+                userEmail = profile.email ?: stringResource(R.string.profile_not_specified),
                 userPhone = profile.phone
             )
         }
@@ -204,7 +206,7 @@ private fun ProfileContent(
 
         // Кнопка выхода
         AppOutlinedButton(
-            text = "Выйти из аккаунта",
+            text = stringResource(R.string.profile_logout),
             onClick = { onIntent(ProfileIntent.LogoutClicked) },
             modifier = Modifier.fillMaxWidth()
         )

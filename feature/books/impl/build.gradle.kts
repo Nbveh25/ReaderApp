@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":core:util"))
     implementation(project(":core:network"))
     implementation(project(":core:firebase"))
+    implementation(project(":core:resources"))
     implementation(project(":feature:books:api"))
 
     // Firebase

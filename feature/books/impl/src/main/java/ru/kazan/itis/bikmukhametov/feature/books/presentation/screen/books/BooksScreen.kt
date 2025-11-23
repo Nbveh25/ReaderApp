@@ -85,7 +85,7 @@ fun BooksScreen(
 
                 uiState.error != null && uiState.books.isEmpty() -> {
                     ErrorState(
-                        error = uiState.error ?: "Неизвестная ошибка",
+                        error = uiState.error ?: stringResource(R.string.books_error_unknown),
                         onRetry = { viewModel.onIntent(BooksIntent.RetryClicked) }
                     )
                 }

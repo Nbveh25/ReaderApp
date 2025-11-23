@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 import ru.kazan.itis.bikmukhametov.feature.auth.api.usecase.GetCurrentUserUseCase
 import ru.kazan.itis.bikmukhametov.feature.auth.api.util.InputValidator
 import ru.kazan.itis.bikmukhametov.feature.auth.api.usecase.LoginUseCase
+import ru.kazan.itis.bikmukhametov.impl.R
+import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import java.io.IOException
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -22,7 +24,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val inputValidator: InputValidator,
     private val loginUseCase: LoginUseCase,
-    private val getCurrentUserUseCase: GetCurrentUserUseCase
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthState())
@@ -92,7 +95,7 @@ class AuthViewModel @Inject constructor(
     private fun handleLogin() {
         if (!_uiState.value.isButtonEnabled) {
             viewModelScope.launch {
-                _effect.tryEmit(AuthEffect.ShowSnackbar("Проверьте корректность Email и Пароля"))
+                _effect.tryEmit(AuthEffect.ShowSnackbar(stringResourceProvider.getString(R.string.auth_message_validate_email_password)))
             }
             return
         }
@@ -111,7 +114,7 @@ class AuthViewModel @Inject constructor(
                     _uiState.value.emailInput,
                     _uiState.value.passwordInput
                 ).onSuccess {
-                    _effect.emit(AuthEffect.ShowSnackbar("Успешный вход"))
+                    _effect.emit(AuthEffect.ShowSnackbar(stringResourceProvider.getString(R.string.auth_message_login_success)))
                     _effect.emit(AuthEffect.NavigateToHome)
                 }.onFailure { error ->
                     handleLoginError(error)
@@ -132,8 +135,8 @@ class AuthViewModel @Inject constructor(
                 error.message?.contains("интернет", ignoreCase = true) == true
 
         val errorMsg = when {
-            isNetworkError -> "Ошибка сети. Проверьте подключение к интернету"
-            else -> error.message ?: "Ошибка входа"
+            isNetworkError -> stringResourceProvider.getString(R.string.auth_error_network)
+            else -> error.message ?: stringResourceProvider.getString(R.string.auth_error_login)
         }
 
         _uiState.update {

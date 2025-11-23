@@ -16,13 +16,16 @@ import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DownloadBookUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.GetBooksUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.mapper.BookMapper
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.model.BookItem
+import ru.kazan.itis.bikmukhametov.feature.books.R
+import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import javax.inject.Inject
 
 @HiltViewModel
 class BooksViewModel @Inject constructor(
     private val getBooksUseCase: GetBooksUseCase,
     private val downloadBookUseCase: DownloadBookUseCase,
-    private val localBookDataSource: LocalBookDataSource
+    private val localBookDataSource: LocalBookDataSource,
+    private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(BooksState())
@@ -66,7 +69,10 @@ class BooksViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = "Ошибка загрузки книг: ${e.message}",
+                        error = stringResourceProvider.getString(
+                            R.string.books_error_load_books,
+                            e.message ?: ""
+                        ),
                         processingBookId = null
                     )
                 }
@@ -104,21 +110,23 @@ class BooksViewModel @Inject constructor(
             _uiState.update { it.copy(processingBookId = bookId) }
 
             try {
-                // Удаляем книгу из локального хранилища
                 val deleted = localBookDataSource.deleteBook(bookId)
 
                 if (deleted) {
-                    // Перезагружаем список для синхронизации с репозиторием
-                    // processingBookId будет сброшен в loadBooks()
                     loadBooks()
-                    _effect.emit(BooksEffect.ShowMessage("Книга удалена"))
+                    _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(R.string.books_message_book_deleted)))
                 } else {
                     _uiState.update { it.copy(processingBookId = null) }
-                    _effect.emit(BooksEffect.ShowMessage("Ошибка удаления книги"))
+                    _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(R.string.books_error_delete_failed)))
                 }
             } catch (e: Exception) {
                 _uiState.update { it.copy(processingBookId = null) }
-                _effect.emit(BooksEffect.ShowMessage("Ошибка удаления: ${e.message}"))
+                _effect.emit(BooksEffect.ShowMessage(
+                    stringResourceProvider.getString(
+                        R.string.books_error_delete_with_message,
+                        e.message ?: ""
+                    )
+                ))
             }
         }
     }
@@ -132,14 +140,14 @@ class BooksViewModel @Inject constructor(
                 val book = _uiState.value.books.find { it.id == bookId }
                 if (book == null) {
                     _uiState.update { it.copy(processingBookId = null) }
-                    _effect.emit(BooksEffect.ShowMessage("Книга не найдена"))
+                    _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(R.string.books_error_book_not_found)))
                     return@launch
                 }
 
                 val fileUrl = book.fileUrl
                 if (fileUrl == null) {
                     _uiState.update { it.copy(processingBookId = null) }
-                    _effect.emit(BooksEffect.ShowMessage("URL для скачивания не найден"))
+                    _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(R.string.books_error_download_url_not_found)))
                     return@launch
                 }
 
@@ -149,19 +157,24 @@ class BooksViewModel @Inject constructor(
                 if (downloadResult.isSuccess) {
                     // Перезагружаем список для синхронизации с репозиторием
                     loadBooks()
-                    _effect.emit(BooksEffect.ShowMessage("Книга успешно загружена"))
+                    _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(R.string.books_message_download_success)))
                 } else {
                     val error = downloadResult.exceptionOrNull()
                     _uiState.update { it.copy(processingBookId = null) }
                     _effect.emit(
                         BooksEffect.ShowMessage(
-                            error?.message ?: "Ошибка загрузки книги"
+                            error?.message ?: stringResourceProvider.getString(R.string.books_error_download_failed)
                         )
                     )
                 }
             } catch (e: Exception) {
                 _uiState.update { it.copy(processingBookId = null) }
-                _effect.emit(BooksEffect.ShowMessage("Ошибка загрузки: ${e.message}"))
+                _effect.emit(BooksEffect.ShowMessage(
+                    stringResourceProvider.getString(
+                        R.string.books_error_download_with_message,
+                        e.message ?: ""
+                    )
+                ))
             }
         }
     }

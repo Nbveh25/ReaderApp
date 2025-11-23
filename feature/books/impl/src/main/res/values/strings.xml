@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Books Screen -->
     <string name="books_title">Книги</string>
     <string name="books_search_placeholder">Поиск...</string>
     <string name="books_empty">Нет доступных книг</string>
@@ -7,5 +8,17 @@
     <string name="books_retry">Повторить</string>
     <string name="books_delete_success">Удалить</string>
     <string name="books_download_success">Скачать</string>
+    
+    <!-- Books ViewModel Messages -->
+    <string name="books_error_load_books">Ошибка загрузки книг: %1$s</string>
+    <string name="books_message_book_deleted">Книга удалена</string>
+    <string name="books_error_delete_failed">Ошибка удаления книги</string>
+    <string name="books_error_delete_with_message">Ошибка удаления: %1$s</string>
+    <string name="books_error_book_not_found">Книга не найдена</string>
+    <string name="books_error_download_url_not_found">URL для скачивания не найден</string>
+    <string name="books_message_download_success">Книга успешно загружена</string>
+    <string name="books_error_download_failed">Ошибка загрузки книги</string>
+    <string name="books_error_download_with_message">Ошибка загрузки: %1$s</string>
+    <string name="books_error_unknown">Неизвестная ошибка</string>
 </resources>
 
