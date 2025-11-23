@@ -56,6 +56,9 @@ pdf = "1.8.10.3"
 # epub
 epub = "1.17.2"
 
+# lottie
+lottie = "6.1.0"
+
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -89,8 +92,6 @@ androidx-compose-material-icons = { group = "androidx.compose.material", name = 
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
-firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
-google-services = { group = "com.google.gms", name = "google-services" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
@@ -107,6 +108,8 @@ com-amazon-ycos = { group = "com.amazonaws", name = "aws-android-sdk-s3", versio
 pdf-reader = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdf"}
 
 epub-reader = {group = "org.jsoup", name = "jsoup", version.ref = "epub"}
+
+lottie-animation = {group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie"}
 
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }

@@ -75,6 +75,9 @@ dependencies {
     // Coil
     implementation(libs.coil)
 
+    // Lottie
+    implementation(libs.lottie.animation)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

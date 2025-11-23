@@ -27,6 +27,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppPrimaryButton
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTopBar
 import ru.kazan.itis.bikmukhametov.feature.books.R
@@ -165,15 +168,19 @@ fun EmptyState() {
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.padding(16.dp)
         ) {
-            Icon(
-                painter = painterResource(id = android.R.drawable.ic_menu_gallery),
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            val composition by rememberLottieComposition(
+                LottieCompositionSpec.RawRes(R.raw.not_found_lottie)
             )
+            
+            LottieAnimation(
+                composition = composition,
+                iterations = Int.MAX_VALUE,
+                modifier = Modifier.size(200.dp)
+            )
+            
             Text(
                 text = stringResource(R.string.books_empty),
                 style = MaterialTheme.typography.bodyLarge,
