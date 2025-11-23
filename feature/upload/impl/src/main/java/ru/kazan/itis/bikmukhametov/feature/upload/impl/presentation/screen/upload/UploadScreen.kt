@@ -1,6 +1,5 @@
 package ru.kazan.itis.bikmukhametov.feature.upload.impl.presentation.screen.upload
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,10 +29,12 @@ import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppOutlinedButton
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppPrimaryButton
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTextField
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTopBar
+import ru.kazan.itis.bikmukhametov.feature.upload.impl.R
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun UploadScreen() {
+fun UploadScreen(
+    onNavigateToBooks: () -> Unit = {},
+) {
     val viewModel: UploadViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -59,7 +61,7 @@ fun UploadScreen() {
                     filePickerLauncher.launch("application/*")
                 }
                 is UploadEffect.NavigateToBooks -> {
-                    // TODO: Реализовать навигацию после успешной загрузки
+                    onNavigateToBooks
                 }
             }
         }
@@ -69,7 +71,7 @@ fun UploadScreen() {
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             AppTopBar(
-                title = "Загрузка книги"
+                title = stringResource(R.string.upload_title)
             )
         },
         containerColor = MaterialTheme.colorScheme.background
@@ -147,7 +149,7 @@ private fun UploadContent(
         // Сообщение об успехе
         if (state.isSuccess) {
             SuccessMessage(
-                message = "Книга успешно загружена",
+                message = stringResource(R.string.upload_message_success),
                 modifier = Modifier.fillMaxWidth()
             )
         }

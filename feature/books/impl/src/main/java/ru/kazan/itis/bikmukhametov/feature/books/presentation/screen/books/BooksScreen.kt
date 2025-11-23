@@ -1,6 +1,5 @@
 package ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +32,6 @@ import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.ui.Bo
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.ui.EmptySearchState
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.ui.SearchBar
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BooksScreen(
     onNavigateToReading: (String) -> Unit = {}

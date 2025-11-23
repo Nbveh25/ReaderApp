@@ -47,7 +47,11 @@ fun AppNavigation(
             }
 
             composable(Routes.UPLOAD) {
-                UploadScreen()
+                UploadScreen(
+                    onNavigateToBooks = {
+                        navController.navigate(Routes.BOOKS)
+                    }
+                )
             }
 
             composable(Routes.BOOKS) {

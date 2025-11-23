@@ -36,7 +36,6 @@ import ru.kazan.itis.bikmukhametov.feature.profile.impl.R
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.ProfileAvatar
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.UserInfoCard
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(
     onLogoutClick: () -> Unit = {}
