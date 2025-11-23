@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="register_title">Регистрация</string>
+    <string name="register_brand_title">Создайте аккаунт</string>
+    
+    <string name="register_email_label">Email</string>
+    <string name="register_password_label">Пароль</string>
+    <string name="register_confirm_password_label">Подтвердите пароль</string>
+    
+    <string name="register_primary_button">Зарегистрироваться</string>
+    <string name="register_retry_button">Повторить</string>
+    
+    <string name="register_error_invalid_email">Неверный формат email</string>
+    <string name="register_error_passwords_not_match">Пароли не совпадают</string>
+    <string name="register_error_network">Ошибка сети. Проверьте подключение к интернету</string>
+    <string name="register_error_register">Ошибка регистрации</string>
+    
+    <string name="register_message_validate_fields">Пожалуйста, заполните все поля корректно</string>
+    <string name="register_message_success">Регистрация успешна!</string>
+    <string name="register_back">Назад</string>
+</resources>
+
