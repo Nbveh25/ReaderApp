@@ -27,6 +27,7 @@ include(":feature")
 include(":core:ui")
 include(":core:util")
 include(":core:model")
+include(":core:network")
 
 include(":feature:auth")
 include(":feature:auth:api")

@@ -22,7 +22,6 @@ import ru.kazan.itis.bikmukhametov.feature.books.data.repository.BookRepositoryI
 import ru.kazan.itis.bikmukhametov.feature.books.data.util.FileStorageManager
 import ru.kazan.itis.bikmukhametov.feature.books.domain.usecase.DownloadBookUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.books.domain.usecase.GetBooksUseCaseImpl
-import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -67,16 +66,6 @@ object BooksModule {
         localBookDataSource: LocalBookDataSource
     ): BookRepository {
         return BookRepositoryImpl(remoteBookDataSource, localBookDataSource)
-    }
-
-    @Provides
-    @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
     }
 
     @Provides
