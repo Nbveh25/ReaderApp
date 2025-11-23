@@ -33,9 +33,6 @@ class BookDownloaderImpl @Inject constructor(
             }
 
             val body = response.body
-            if (body == null) {
-                return@withContext Result.failure(IOException("Пустой ответ от сервера"))
-            }
 
             val bytes = body.bytes()
             Result.success(bytes)

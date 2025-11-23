@@ -3,24 +3,23 @@ package ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.kazan.itis.bikmukhametov.feature.profile.api.model.ImageModel
-import ru.kazan.itis.bikmukhametov.feature.profile.api.resource.ResourceProvider
+import ru.kazan.itis.bikmukhametov.feature.profile.api.resource.ImageResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCase
 import java.io.IOException
 import javax.inject.Inject
 
 class SelectImageUseCaseImpl @Inject constructor(
-    private val resourceProvider: ResourceProvider
+    private val imageResourceProvider: ImageResourceProvider
 ) : SelectImageUseCase {
 
     companion object {
         private const val MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024 // 10 МБ
-        private val ALLOWED_EXTENSIONS = listOf("jpg", "jpeg", "png", "webp", "gif")
     }
 
     override suspend fun invoke(imageUriString: String): Result<ImageModel> = withContext(Dispatchers.IO) {
         try {
             // Открываем поток для чтения
-            val inputStream = resourceProvider.openInputStream(imageUriString)
+            val inputStream = imageResourceProvider.openInputStream(imageUriString)
                 ?: return@withContext Result.failure(IOException("Не удалось открыть файл"))
 
             // Читаем данные из потока
@@ -40,16 +39,8 @@ class SelectImageUseCaseImpl @Inject constructor(
             }
 
             // Получаем имя файла
-            val fileName = resourceProvider.getFileName(imageUriString)
+            val fileName = imageResourceProvider.getFileName(imageUriString)
                 ?: "profile_photo_${System.currentTimeMillis()}.jpg"
-
-            // Проверяем расширение файла
-            val extension = fileName.substringAfterLast('.', "").lowercase()
-            if (extension !in ALLOWED_EXTENSIONS) {
-                return@withContext Result.failure(
-                    IOException("Неподдерживаемый формат изображения. Поддерживаемые форматы: ${ALLOWED_EXTENSIONS.joinToString(", ")}")
-                )
-            }
 
             Result.success(ImageModel(imageBytes, fileName))
         } catch (e: SecurityException) {

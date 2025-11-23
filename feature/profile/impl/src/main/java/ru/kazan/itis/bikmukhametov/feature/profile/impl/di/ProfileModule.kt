@@ -8,10 +8,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import ru.kazan.itis.bikmukhametov.feature.profile.api.config.S3Config
 import ru.kazan.itis.bikmukhametov.feature.profile.api.datasource.remote.AvatarUploader
-import ru.kazan.itis.bikmukhametov.feature.profile.api.resource.ResourceProvider
+import ru.kazan.itis.bikmukhametov.feature.profile.api.resource.ImageResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.profile.api.repository.ProfileRepository
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.GetUserProfileUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCase
@@ -26,7 +25,7 @@ import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.SelectIma
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.SignOutUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.UpdateUserNameUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.UploadProfilePhotoUseCaseImpl
-import ru.kazan.itis.bikmukhametov.feature.profile.impl.resource.ResourceProviderImpl
+import ru.kazan.itis.bikmukhametov.feature.profile.impl.data.resource.ImageResourceProviderImpl
 import javax.inject.Singleton
 
 @Module
@@ -45,8 +44,8 @@ object ProfileModule {
     @Singleton
     fun provideResourceProvider(
         contentResolver: ContentResolver
-    ): ResourceProvider {
-        return ResourceProviderImpl(contentResolver)
+    ): ImageResourceProvider {
+        return ImageResourceProviderImpl(contentResolver)
     }
 
     @Provides
@@ -66,9 +65,9 @@ object ProfileModule {
     @Provides
     @Singleton
     fun provideSelectImageUseCase(
-        resourceProvider: ResourceProvider
+        imageResourceProvider: ImageResourceProvider
     ): SelectImageUseCase {
-        return SelectImageUseCaseImpl(resourceProvider)
+        return SelectImageUseCaseImpl(imageResourceProvider)
     }
 
     @Provides
