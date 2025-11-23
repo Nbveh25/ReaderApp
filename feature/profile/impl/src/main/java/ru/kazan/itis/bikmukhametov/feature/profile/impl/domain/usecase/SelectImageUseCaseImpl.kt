@@ -2,7 +2,7 @@ package ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import ru.kazan.itis.bikmukhametov.core.resources.ImageResourceProvider
+import ru.kazan.itis.bikmukhametov.core.resources.image.ImageResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.profile.api.model.ImageModel
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCase
 import java.io.IOException

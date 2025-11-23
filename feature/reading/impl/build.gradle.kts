@@ -8,10 +8,10 @@ plugins {
 
 android {
     namespace = "ru.kazan.itis.bikmukhametov.feature.reading"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -40,7 +40,7 @@ android {
 
 dependencies {
     implementation(project(":core:ui"))
-    implementation(project(":core:util"))
+    implementation(project(":core:resources"))
     implementation(project(":core:model"))
 
     implementation(project(":feature:books:api"))

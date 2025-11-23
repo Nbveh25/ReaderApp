@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "ru.kazan.itis.bikmukhametov.core.ui"
-    compileSdk = 36
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdk.get().toInt()
     }
 
     buildTypes {
@@ -36,7 +36,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.material3)
 
-    // Material Icons для AppPasswordTextField
+    // Material Icons
     implementation(libs.androidx.compose.material.icons)
 }
 

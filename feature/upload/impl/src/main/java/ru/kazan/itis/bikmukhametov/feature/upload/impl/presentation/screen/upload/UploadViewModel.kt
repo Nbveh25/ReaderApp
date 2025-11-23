@@ -18,6 +18,8 @@ import ru.kazan.itis.bikmukhametov.feature.upload.api.usecase.ReadFileUseCase
 import ru.kazan.itis.bikmukhametov.feature.upload.api.usecase.SaveFileLocallyUseCase
 import ru.kazan.itis.bikmukhametov.feature.upload.api.usecase.UploadBookUseCase
 import ru.kazan.itis.bikmukhametov.feature.upload.api.usecase.ValidateBookFileUseCase
+import ru.kazan.itis.bikmukhametov.feature.upload.impl.R
+import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,7 +28,8 @@ class UploadViewModel @Inject constructor(
     private val validateBookFileUseCase: ValidateBookFileUseCase,
     private val readFileUseCase: ReadFileUseCase,
     private val saveFileLocallyUseCase: SaveFileLocallyUseCase,
-    private val getCurrentUserUseCase: GetCurrentUserUseCase
+    private val getCurrentUserUseCase: GetCurrentUserUseCase,
+    private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UploadState())
@@ -62,26 +65,40 @@ class UploadViewModel @Inject constructor(
 
     private fun handleFileSelected(fileUri: String, fileName: String?) {
         viewModelScope.launch {
-            // Если имя файла не передано, получаем его через use case
-            val actualFileName = if (fileName != null) {
-                fileName
-            } else {
-                readFileUseCase.invoke(fileUri)
-                    .fold(
-                        onSuccess = { it.fileName },
-                        onFailure = { "book_${System.currentTimeMillis()}" }
+            if (fileName != null) {
+                Log.d("UploadViewModel", "Выбран файл: URI=$fileUri, fileName=$fileName")
+                _uiState.update {
+                    it.copy(
+                        selectedFileUri = fileUri,
+                        selectedFileName = fileName,
+                        error = null,
+                        isSuccess = false
                     )
-            }
-            
-            Log.d("UploadViewModel", "Выбран файл: URI=$fileUri, fileName=$actualFileName")
-            
-            _uiState.update {
-                it.copy(
-                    selectedFileUri = fileUri,
-                    selectedFileName = actualFileName,
-                    error = null,
-                    isSuccess = false
-                )
+                }
+            } else {
+                val fileDataResult = readFileUseCase.invoke(fileUri)
+                fileDataResult
+                    .onSuccess { fileData ->
+                        Log.d("UploadViewModel", "Выбран файл: URI=$fileUri, fileName=${fileData.fileName}")
+                        _uiState.update {
+                            it.copy(
+                                selectedFileUri = fileUri,
+                                selectedFileName = fileData.fileName,
+                                error = null,
+                                isSuccess = false
+                            )
+                        }
+                    }
+                    .onFailure { error ->
+                        Log.e("UploadViewModel", "Ошибка чтения файла: ${error.message}")
+                        val errorMessage = error.message ?: stringResourceProvider.getString(R.string.upload_error_read_file)
+                        _effect.emit(UploadEffect.ShowMessage(errorMessage))
+                        _uiState.update {
+                            it.copy(
+                                error = errorMessage
+                            )
+                        }
+                    }
             }
         }
     }
@@ -95,7 +112,7 @@ class UploadViewModel @Inject constructor(
 
         if (fileUri == null || fileName == null) {
             viewModelScope.launch {
-                _effect.emit(UploadEffect.ShowMessage("Выберите файл для загрузки"))
+                _effect.emit(UploadEffect.ShowMessage(stringResourceProvider.getString(R.string.upload_message_select_file)))
             }
             return
         }
@@ -103,7 +120,7 @@ class UploadViewModel @Inject constructor(
         viewModelScope.launch {
             val currentUser = getCurrentUserUseCase.invoke() as? FirebaseUser
             if (currentUser == null) {
-                _effect.emit(UploadEffect.ShowMessage("Пользователь не авторизован"))
+                _effect.emit(UploadEffect.ShowMessage(stringResourceProvider.getString(R.string.upload_message_user_not_authorized)))
                 return@launch
             }
 
@@ -118,51 +135,48 @@ class UploadViewModel @Inject constructor(
             }
 
             try {
-                // Читаем файл через use case
+                // Читаем файл
                 val fileDataResult = readFileUseCase.invoke(fileUri)
                 
-                if (fileDataResult.isFailure) {
-                    val errorMessage = fileDataResult.exceptionOrNull()?.message ?: "Не удалось прочитать файл"
+                val fileData = fileDataResult.getOrElse { error ->
                     _uiState.update {
                         it.copy(
                             isUploading = false,
-                            error = errorMessage
+                            error = error.message ?: stringResourceProvider.getString(R.string.upload_error_failed_to_read_file)
                         )
                     }
                     return@launch
                 }
 
-                val fileData = fileDataResult.getOrThrow()
-                val actualFileName = fileData.fileName
-                val fileSize = fileData.fileSize
-
-                Log.d("UploadViewModel", "Валидация файла: fileName=$actualFileName, size=$fileSize")
-                validateBookFileUseCase.invoke(actualFileName, fileSize)
+                // Валидация файла
+                Log.d("UploadViewModel", "Валидация файла: fileName=${fileData.fileName}, size=${fileData.fileSize}")
+                validateBookFileUseCase.invoke(fileData.fileName, fileData.fileSize)
                     .onFailure { error ->
                         Log.e("UploadViewModel", "Ошибка валидации: ${error.message}")
                         _uiState.update {
                             it.copy(
                                 isUploading = false,
-                                error = error.message ?: "Ошибка валидации файла"
+                                error = error.message ?: stringResourceProvider.getString(R.string.upload_error_validation_failed)
                             )
                         }
                         return@launch
                     }
 
+                // Сохраняем файл локально
                 val localSaveResult = saveFileLocallyUseCase.invoke(
                     fileData.createInputStream(),
-                    actualFileName
+                    fileData.fileName
                 )
 
                 localSaveResult.onSuccess { localPath ->
                     Log.d("UploadViewModel", "Файл сохранен локально: $localPath")
                 }
 
-                // Загружаем в YCS и сохраняем метаданные в Firestore (создаем новый поток)
+                // Загружаем в YCS и сохраняем метаданные в Firestore
                 uploadBookUseCase.invoke(
                     inputStream = fileData.createInputStream(),
-                    fileName = actualFileName,
-                    fileSize = fileSize,
+                    fileName = fileData.fileName,
+                    fileSize = fileData.fileSize,
                     title = title,
                     author = author,
                     userId = user.uid,
@@ -178,27 +192,28 @@ class UploadViewModel @Inject constructor(
                                 uploadProgress = 1f
                             )
                         }
-                        _effect.emit(UploadEffect.ShowMessage("Книга успешно загружена"))
+                        _effect.emit(UploadEffect.ShowMessage(stringResourceProvider.getString(R.string.upload_message_success)))
                         _effect.emit(UploadEffect.NavigateToBooks)
                     }
                     .onFailure { error ->
                         _uiState.update {
                             it.copy(
                                 isUploading = false,
-                                error = error.message ?: "Ошибка загрузки книги"
+                                error = error.message ?: stringResourceProvider.getString(R.string.upload_error_upload_failed)
                             )
                         }
-                        _effect.emit(UploadEffect.ShowMessage(error.message ?: "Ошибка загрузки"))
+                        _effect.emit(UploadEffect.ShowMessage(error.message ?: stringResourceProvider.getString(R.string.upload_error_upload)))
                     }
             } catch (e: Exception) {
                 Log.e("UploadViewModel", "Ошибка при загрузке книги", e)
+                val errorMessage = e.message ?: stringResourceProvider.getString(R.string.upload_error_occurred)
                 _uiState.update {
                     it.copy(
                         isUploading = false,
-                        error = e.message ?: "Произошла ошибка"
+                        error = errorMessage
                     )
                 }
-                _effect.emit(UploadEffect.ShowMessage(e.message ?: "Произошла ошибка"))
+                _effect.emit(UploadEffect.ShowMessage(errorMessage))
             }
         }
     }

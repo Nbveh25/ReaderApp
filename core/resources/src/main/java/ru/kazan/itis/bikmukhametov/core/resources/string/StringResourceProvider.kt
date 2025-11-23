@@ -1,8 +1,9 @@
-package ru.kazan.itis.bikmukhametov.util
+package ru.kazan.itis.bikmukhametov.core.resources.string
 
-interface ResourceProvider {
+interface StringResourceProvider {
 
     fun getString(resId: Int): String
 
     fun getString(resId: Int, vararg formatArgs: Any): String
 }
+

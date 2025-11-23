@@ -4,6 +4,9 @@ import java.io.InputStream
 
 interface SaveFileLocallyUseCase {
 
-    suspend operator fun invoke(inputStream: InputStream, fileName: String): Result<String>
+    suspend fun invoke(
+        inputStream: InputStream,
+        fileName: String
+    ): Result<String>
 }
 

@@ -1,14 +1,13 @@
-package ru.kazan.itis.bikmukhametov.feature.reading.util
+package ru.kazan.itis.bikmukhametov.core.resources.string
 
 import android.content.Context
-import ru.kazan.itis.bikmukhametov.util.ResourceProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ResourceProviderImpl @Inject constructor(
+class StringResourceProviderImpl @Inject constructor(
     private val context: Context
-) : ResourceProvider {
+) : StringResourceProvider {
     override fun getString(resId: Int): String {
         return context.getString(resId)
     }
@@ -17,3 +16,4 @@ class ResourceProviderImpl @Inject constructor(
         return context.getString(resId, *formatArgs)
     }
 }
+

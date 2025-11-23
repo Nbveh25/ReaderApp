@@ -1,7 +1,6 @@
 package ru.kazan.itis.bikmukhametov.feature.auth.presentation.screen.auth
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +26,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -42,7 +42,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppOutlinedButton
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppPasswordTextField
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppPrimaryButton
@@ -57,7 +56,7 @@ fun AuthScreen(
     onNavigateToHome: () -> Unit = {},
     onNavigateToRegistration: () -> Unit = {}
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val focusManager = LocalFocusManager.current
 

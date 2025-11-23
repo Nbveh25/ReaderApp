@@ -9,7 +9,10 @@ class SaveFileLocallyUseCaseImpl @Inject constructor(
     private val localFileStorage: LocalFileStorage
 ) : SaveFileLocallyUseCase {
 
-    override suspend fun invoke(inputStream: InputStream, fileName: String): Result<String> {
+    override suspend fun invoke(
+        inputStream: InputStream,
+        fileName: String
+    ): Result<String> {
         return localFileStorage.saveFileLocally(inputStream, fileName)
     }
 }

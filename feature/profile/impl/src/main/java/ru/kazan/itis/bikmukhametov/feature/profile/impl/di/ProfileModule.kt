@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.kazan.itis.bikmukhametov.core.network.config.S3Config
-import ru.kazan.itis.bikmukhametov.core.resources.ImageResourceProvider
+import ru.kazan.itis.bikmukhametov.core.resources.image.ImageResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.profile.api.datasource.remote.AvatarUploader
 import ru.kazan.itis.bikmukhametov.feature.profile.api.repository.ProfileRepository
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.GetUserProfileUseCase

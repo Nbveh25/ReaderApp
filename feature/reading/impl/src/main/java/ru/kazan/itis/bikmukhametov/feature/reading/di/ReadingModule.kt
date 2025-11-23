@@ -6,7 +6,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.kazan.itis.bikmukhametov.util.ResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
 import ru.kazan.itis.bikmukhametov.feature.reading.api.data.ReadingPreferences
 import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingRepository
@@ -21,7 +20,6 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveReadingPositi
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveThemeModeUseCase
 import ru.kazan.itis.bikmukhametov.feature.reading.data.preferences.ReadingPreferencesImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.data.repository.ReadingRepositoryImpl
-import ru.kazan.itis.bikmukhametov.feature.reading.util.ResourceProviderImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.domain.usecase.DeleteBookUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.domain.usecase.GetBookUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.domain.usecase.GetReadingPositionUseCaseImpl
@@ -121,14 +119,6 @@ object ReadingModule {
         readingRepository: ReadingRepository
     ): SaveThemeModeUseCase {
         return SaveThemeModeUseCaseImpl(readingRepository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideResourceProvider(
-        @ApplicationContext context: Context
-    ): ResourceProvider {
-        return ResourceProviderImpl(context)
     }
 }
 

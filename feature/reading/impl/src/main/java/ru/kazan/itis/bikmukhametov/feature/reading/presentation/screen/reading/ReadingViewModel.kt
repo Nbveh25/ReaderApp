@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.kazan.itis.bikmukhametov.util.ResourceProvider
+import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.reading.R
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.DeleteBookUseCase
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.GetBookUseCase
@@ -35,7 +35,7 @@ class ReadingViewModel @Inject constructor(
     private val saveFontSizeUseCase: SaveFontSizeUseCase,
     private val saveLineSpacingUseCase: SaveLineSpacingUseCase,
     private val saveThemeModeUseCase: SaveThemeModeUseCase,
-    private val resourceProvider: ResourceProvider
+    private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ReadingState())
@@ -87,7 +87,7 @@ class ReadingViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = bookResult.exceptionOrNull()?.message ?: resourceProvider.getString(R.string.reading_error_load_book)
+                            error = bookResult.exceptionOrNull()?.message ?: stringResourceProvider.getString(R.string.reading_error_load_book)
                         )
                     }
                     return@launch
@@ -100,7 +100,7 @@ class ReadingViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = resourceProvider.getString(R.string.reading_error_book_not_downloaded)
+                            error = stringResourceProvider.getString(R.string.reading_error_book_not_downloaded)
                         )
                     }
                     return@launch
@@ -112,7 +112,7 @@ class ReadingViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = contentResult.exceptionOrNull()?.message ?: resourceProvider.getString(R.string.reading_error_read_file)
+                            error = contentResult.exceptionOrNull()?.message ?: stringResourceProvider.getString(R.string.reading_error_read_file)
                         )
                     }
                     return@launch
@@ -144,7 +144,7 @@ class ReadingViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = e.message ?: resourceProvider.getString(R.string.reading_unknown_error)
+                        error = e.message ?: stringResourceProvider.getString(R.string.reading_unknown_error)
                     )
                 }
             }
@@ -209,11 +209,11 @@ class ReadingViewModel @Inject constructor(
                     _effect.emit(ReadingEffect.BookDeleted)
                     _effect.emit(ReadingEffect.NavigateBack)
                 } else {
-                    _effect.emit(ReadingEffect.ShowMessage(resourceProvider.getString(R.string.reading_error_delete_failed)))
+                    _effect.emit(ReadingEffect.ShowMessage(stringResourceProvider.getString(R.string.reading_error_delete_failed)))
                 }
             }.onFailure { error ->
                 _effect.emit(ReadingEffect.ShowMessage(
-                    error.message ?: resourceProvider.getString(R.string.reading_error_delete_failed)
+                    error.message ?: stringResourceProvider.getString(R.string.reading_error_delete_failed)
                 ))
             }
         }

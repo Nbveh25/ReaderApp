@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ru.kazan.itis.bikmukhametov.core.network.config.S3Config
+import ru.kazan.itis.bikmukhametov.core.resources.image.ImageResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.upload.api.datasource.local.LocalFileStorage
 import ru.kazan.itis.bikmukhametov.feature.upload.api.datasource.remote.BookUploader
 import ru.kazan.itis.bikmukhametov.feature.upload.api.repository.BookRepository
@@ -62,9 +63,9 @@ object UploadModule {
     @Provides
     @Singleton
     fun provideReadFileUseCase(
-        readFileUseCaseImpl: ReadFileUseCaseImpl
+        imageResourceProvider: ImageResourceProvider
     ): ReadFileUseCase {
-        return readFileUseCaseImpl
+        return ReadFileUseCaseImpl(imageResourceProvider)
     }
 
     @Provides

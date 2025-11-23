@@ -1,17 +1,15 @@
 package ru.kazan.itis.bikmukhametov.feature.upload.impl.data.datasource.local
 
 import android.content.Context
-import ru.kazan.itis.bikmukhametov.feature.upload.api.datasource.local.LocalFileStorage as LocalFileStorageContract
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import javax.inject.Inject
-import javax.inject.Singleton
+import ru.kazan.itis.bikmukhametov.feature.upload.api.datasource.local.LocalFileStorage
 
-@Singleton
 class LocalFileStorageImpl @Inject constructor(
     private val context: Context
-) : LocalFileStorageContract {
+) : LocalFileStorage {
     companion object {
         private const val BOOKS_FOLDER = "uploaded_books"
     }
