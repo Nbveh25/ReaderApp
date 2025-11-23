@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.reading.api.data
+package ru.kazan.itis.bikmukhametov.feature.reading.api.data.preferences
 
 interface ReadingPreferences {
     // read position
@@ -21,4 +21,3 @@ interface ReadingPreferences {
 
     fun getThemeMode(): Int
 }
-

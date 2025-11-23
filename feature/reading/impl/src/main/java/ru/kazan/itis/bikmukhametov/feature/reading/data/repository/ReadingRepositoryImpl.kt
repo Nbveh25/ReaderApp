@@ -2,7 +2,7 @@ package ru.kazan.itis.bikmukhametov.feature.reading.data.repository
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import ru.kazan.itis.bikmukhametov.feature.reading.api.data.ReadingPreferences
+import ru.kazan.itis.bikmukhametov.feature.reading.api.data.preferences.ReadingPreferences
 import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingRepository
 import javax.inject.Inject
 import javax.inject.Singleton

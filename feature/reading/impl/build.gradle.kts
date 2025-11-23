@@ -69,6 +69,12 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons)
 
+    // PDF reading
+    implementation(libs.pdf.reader)
+    
+    // EPUB reading 
+    implementation(libs.epub.reader)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

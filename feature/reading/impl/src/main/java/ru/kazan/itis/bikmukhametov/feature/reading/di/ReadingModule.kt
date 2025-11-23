@@ -7,7 +7,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
-import ru.kazan.itis.bikmukhametov.feature.reading.api.data.ReadingPreferences
+import ru.kazan.itis.bikmukhametov.feature.reading.api.data.preferences.ReadingPreferences
+import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.BookFileRepository
 import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingRepository
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.DeleteBookUseCase
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.GetBookUseCase
@@ -18,7 +19,10 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveFontSizeUseCa
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveLineSpacingUseCase
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveReadingPositionUseCase
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveThemeModeUseCase
+import ru.kazan.itis.bikmukhametov.feature.reading.api.data.datasource.local.BookFileDataSource
+import ru.kazan.itis.bikmukhametov.feature.reading.data.datasource.local.BookFileDataSourceImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.data.preferences.ReadingPreferencesImpl
+import ru.kazan.itis.bikmukhametov.feature.reading.data.repository.BookFileRepositoryImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.data.repository.ReadingRepositoryImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.domain.usecase.DeleteBookUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.reading.domain.usecase.GetBookUseCaseImpl
@@ -45,8 +49,24 @@ internal object ReadingModule {
 
     @Provides
     @Singleton
-    fun provideReadBookFileUseCase(): ReadBookFileUseCase {
-        return ReadBookFileUseCaseImpl()
+    fun provideBookFileDataSource(): BookFileDataSource {
+        return BookFileDataSourceImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideBookFileRepository(
+        bookFileDataSource: BookFileDataSource
+    ): BookFileRepository {
+        return BookFileRepositoryImpl(bookFileDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideReadBookFileUseCase(
+        bookFileRepository: BookFileRepository
+    ): ReadBookFileUseCase {
+        return ReadBookFileUseCaseImpl(bookFileRepository)
     }
 
     @Provides

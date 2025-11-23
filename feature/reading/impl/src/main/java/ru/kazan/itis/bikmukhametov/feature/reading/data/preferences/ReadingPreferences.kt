@@ -2,7 +2,7 @@ package ru.kazan.itis.bikmukhametov.feature.reading.data.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
-import ru.kazan.itis.bikmukhametov.feature.reading.api.data.ReadingPreferences
+import ru.kazan.itis.bikmukhametov.feature.reading.api.data.preferences.ReadingPreferences
 import androidx.core.content.edit
 
 internal class ReadingPreferencesImpl(

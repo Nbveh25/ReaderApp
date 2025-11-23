@@ -50,6 +50,12 @@ coil = "2.7.0"
 # Yandex Cloud Object Storage
 ycos = "2.25.0"
 
+# pdf
+pdf = "1.8.10.3"
+
+# epub
+epub = "1.17.2"
+
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -97,6 +103,10 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 com-amazon-ycos = { group = "com.amazonaws", name = "aws-android-sdk-s3", version.ref = "ycos" }
+
+pdf-reader = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdf"}
+
+epub-reader = {group = "org.jsoup", name = "jsoup", version.ref = "epub"}
 
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
