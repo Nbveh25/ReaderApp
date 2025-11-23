@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "ru.kazan.itis.bikmukhametov.feature.profile.impl"
+    namespace = "ru.kazan.itis.bikmukhametov.feature.upload.impl"
     compileSdk = 36
 
     defaultConfig {
@@ -41,22 +41,20 @@ android {
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:network"))
+    implementation(project(":core:firebase"))
     implementation(project(":core:resources"))
-    implementation(project(":feature:profile:api"))
+    implementation(project(":feature:upload:api"))
     implementation(project(":feature:auth:api"))
 
     // Firebase
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
 
     // Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
-
-    // Coroutines
-    implementation(libs.coroutines.android)
-    implementation(libs.coroutines.play.services)
 
     // Lifecycle
     implementation(libs.androidx.core.ktx)
@@ -69,13 +67,9 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons)
 
-    // Coil
-    implementation(libs.coil)
-
-    // Yandex Cloud Object Storage
-    implementation(libs.com.amazon.ycos)
+    // Amazon S3 SDK
+    implementation("com.amazonaws:aws-android-sdk-s3:2.25.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -28,6 +28,8 @@ include(":core:ui")
 include(":core:util")
 include(":core:model")
 include(":core:network")
+include(":core:firebase")
+include(":core:resources")
 
 include(":feature:auth")
 include(":feature:auth:api")

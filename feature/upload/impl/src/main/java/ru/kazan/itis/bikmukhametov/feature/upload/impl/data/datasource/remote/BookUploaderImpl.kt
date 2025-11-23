@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.profile.impl.data.datasource.remote
+package ru.kazan.itis.bikmukhametov.feature.upload.impl.data.datasource.remote
 
 import android.util.Log
 import com.amazonaws.ClientConfiguration
@@ -9,21 +9,19 @@ import com.amazonaws.services.s3.model.PutObjectRequest
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import ru.kazan.itis.bikmukhametov.core.network.config.S3Config
-import ru.kazan.itis.bikmukhametov.feature.profile.api.datasource.remote.AvatarUploader
+import ru.kazan.itis.bikmukhametov.feature.upload.api.datasource.remote.BookUploader
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class AvatarUploaderImpl @Inject constructor(
+class BookUploaderImpl @Inject constructor(
     private val s3Config: S3Config
-) : AvatarUploader {
+) : BookUploader {
 
     companion object {
-        private const val AVATARS_FOLDER = "avatars"
-        private const val DEFAULT_CONTENT_TYPE = "image/jpeg"
+        private const val BOOKS_FOLDER = "books"
     }
 
     private fun createS3Client(): AmazonS3Client {
@@ -34,24 +32,24 @@ class AvatarUploaderImpl @Inject constructor(
 
         val clientConfiguration = ClientConfiguration().apply {
             connectionTimeout = 60000
-            socketTimeout = 120000
+            socketTimeout = 300000
             maxErrorRetry = 3
         }
         
         val s3Client = AmazonS3Client(credentials, clientConfiguration)
-
+        
         val endpointWithoutProtocol = s3Config.endpoint
             .removePrefix("https://")
             .removePrefix("http://")
         s3Client.setEndpoint(endpointWithoutProtocol)
-
+        
         try {
             val region = com.amazonaws.regions.Region.getRegion(
                 com.amazonaws.regions.Regions.fromName(s3Config.region)
             )
             s3Client.setRegion(region)
         } catch (e: Exception) {
-            Log.w("AvatarUploaderImpl", "Не удалось установить регион ${s3Config.region}, используем endpoint напрямую")
+            Log.w("BookUploaderImpl", "Регион ${s3Config.region} не найден: ${e.message}")
         }
         
         return s3Client
@@ -60,53 +58,56 @@ class AvatarUploaderImpl @Inject constructor(
     private fun getContentType(fileName: String): String {
         val extension = fileName.substringAfterLast('.', "").lowercase()
         return when (extension) {
-            "jpg", "jpeg" -> "image/jpeg"
-            "png" -> "image/png"
-            "webp" -> "image/webp"
-            "gif" -> "image/gif"
-            else -> DEFAULT_CONTENT_TYPE
+            "txt" -> "text/plain"
+            "epub" -> "application/epub+zip"
+            "pdf" -> "application/pdf"
+            else -> "application/octet-stream"
         }
     }
 
-    override suspend fun uploadAvatar(
+    override suspend fun uploadBook(
         inputStream: InputStream,
         fileName: String,
-        userId: String
+        userId: String,
+        onProgress: (Float) -> Unit
     ): Result<String> = withContext(Dispatchers.IO) {
         val s3Client = createS3Client()
         
         try {
-            val imageBytes = inputStream.readBytes()
-            Log.d("AvatarUploaderImpl", "Размер изображения: ${imageBytes.size} байт")
 
-            val objectKey = "$AVATARS_FOLDER/$userId/$fileName"
-            Log.d("AvatarUploaderImpl", "Object Key: $objectKey")
-
+            val fileBytes = inputStream.readBytes()
+            Log.d("BookUploaderImpl", "Размер файла: ${fileBytes.size} байт")
+            
+            val objectKey = "$BOOKS_FOLDER/$userId/$fileName"
+            Log.d("BookUploaderImpl", "Object Key: $objectKey")
+            
             val contentType = getContentType(fileName)
-            Log.d("AvatarUploaderImpl", "Content-Type: $contentType")
-
+            Log.d("BookUploaderImpl", "Content-Type: $contentType")
+            
             val metadata = ObjectMetadata().apply {
-                contentLength = imageBytes.size.toLong()
+                contentLength = fileBytes.size.toLong()
             }
-
-            val byteArrayInputStream = ByteArrayInputStream(imageBytes)
-
+            
+            val byteArrayInputStream = ByteArrayInputStream(fileBytes)
+            
             val putRequest = PutObjectRequest(
                 s3Config.bucketName,
                 objectKey,
                 byteArrayInputStream,
                 metadata
             )
-
-            Log.d("AvatarUploaderImpl", "Bucket: ${s3Config.bucketName}")
-            Log.d("AvatarUploaderImpl", "Object Key: $objectKey")
-            Log.d("AvatarUploaderImpl", "Content-Type: $contentType")
-            Log.d("AvatarUploaderImpl", "Content-Length: ${imageBytes.size}")
-
+            
+            Log.d("BookUploaderImpl", "Отправка PUT запроса через S3 SDK...")
+            Log.d("BookUploaderImpl", "Bucket: ${s3Config.bucketName}")
+            
+            onProgress(0.3f)
+            
             s3Client.putObject(putRequest)
-
+            
+            onProgress(1.0f)
+            
             val publicUrl = "${s3Config.endpoint}/${s3Config.bucketName}/$objectKey"
-            Log.d("AvatarUploaderImpl", "Файл успешно загружен: $publicUrl")
+            Log.d("BookUploaderImpl", "Файл успешно загружен: $publicUrl")
             
             Result.success(publicUrl)
         } catch (e: com.amazonaws.AmazonServiceException) {
@@ -114,16 +115,16 @@ class AvatarUploaderImpl @Inject constructor(
                 401 -> "Ошибка аутентификации. Проверьте Access Key ID и Secret Access Key"
                 403 -> "Доступ запрещен. Проверьте права доступа к бакету"
                 404 -> "Бакет не найден: ${s3Config.bucketName}"
-                else -> "Ошибка загрузки аватара: ${e.errorCode} - ${e.message}"
+                else -> "Ошибка загрузки книги: ${e.errorCode} - ${e.message}"
             }
-            Log.e("AvatarUploaderImpl", errorMessage, e)
+            Log.e("BookUploaderImpl", errorMessage, e)
             Result.failure(IOException(errorMessage, e))
         } catch (e: IOException) {
-            Log.e("AvatarUploaderImpl", "IOException при загрузке аватара: ${e.message}", e)
+            Log.e("BookUploaderImpl", "IOException при загрузке книги: ${e.message}", e)
             Result.failure(e)
         } catch (e: Exception) {
-            Log.e("AvatarUploaderImpl", "Exception при загрузке аватара: ${e.message}", e)
-            Result.failure(IOException("Ошибка загрузки аватара: ${e.message}", e))
+            Log.e("BookUploaderImpl", "Exception при загрузке книги: ${e.message}", e)
+            Result.failure(IOException("Ошибка загрузки книги: ${e.message}", e))
         } finally {
             s3Client.shutdown()
         }

@@ -1,8 +1,6 @@
 package ru.kazan.itis.bikmukhametov.feature.books.di
 
 import android.content.Context
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,21 +28,6 @@ object BooksModule {
 
     @Provides
     @Singleton
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRemoteBookDataSource(
-        firestore: FirebaseFirestore,
-        firebaseAuth: FirebaseAuth
-    ): RemoteBookDataSource {
-        return RemoteBookDataSourceImpl(firestore, firebaseAuth)
-    }
-
-    @Provides
-    @Singleton
     fun provideFileStorageManager(
         @ApplicationContext context: Context
     ): FileStorageManager {
@@ -57,6 +40,14 @@ object BooksModule {
         fileStorageManager: FileStorageManager
     ): LocalBookDataSource {
         return LocalBookDataSourceImpl(fileStorageManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteBookDataSource(
+        remoteBookDataSourceImpl: RemoteBookDataSourceImpl
+    ): RemoteBookDataSource {
+        return remoteBookDataSourceImpl
     }
 
     @Provides

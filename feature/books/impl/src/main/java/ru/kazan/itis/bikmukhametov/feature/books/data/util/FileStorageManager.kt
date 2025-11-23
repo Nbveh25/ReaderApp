@@ -23,7 +23,6 @@ import javax.inject.Singleton
  *
  * Путь к файлам: /data/data/{package_name}/files/books/
  */
-@Singleton
 class FileStorageManager @Inject constructor(
     private val context: Context
 ) {

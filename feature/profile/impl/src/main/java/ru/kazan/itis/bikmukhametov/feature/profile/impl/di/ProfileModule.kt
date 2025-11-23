@@ -1,23 +1,19 @@
 package ru.kazan.itis.bikmukhametov.feature.profile.impl.di
 
-import android.content.ContentResolver
-import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.kazan.itis.bikmukhametov.feature.profile.api.config.S3Config
+import ru.kazan.itis.bikmukhametov.core.network.config.S3Config
+import ru.kazan.itis.bikmukhametov.core.resources.ImageResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.profile.api.datasource.remote.AvatarUploader
-import ru.kazan.itis.bikmukhametov.feature.profile.api.resource.ImageResourceProvider
 import ru.kazan.itis.bikmukhametov.feature.profile.api.repository.ProfileRepository
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.GetUserProfileUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SignOutUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UpdateUserNameUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UploadProfilePhotoUseCase
-import ru.kazan.itis.bikmukhametov.feature.profile.impl.config.S3ConfigImpl
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.data.datasource.remote.AvatarUploaderImpl
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.data.repository.ProfileRepositoryImpl
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.GetUserProfileUseCaseImpl
@@ -25,7 +21,7 @@ import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.SelectIma
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.SignOutUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.UpdateUserNameUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.domain.usecase.UploadProfilePhotoUseCaseImpl
-import ru.kazan.itis.bikmukhametov.feature.profile.impl.data.resource.ImageResourceProviderImpl
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -34,30 +30,8 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideContentResolver(
-        @ApplicationContext context: Context
-    ): ContentResolver {
-        return context.contentResolver
-    }
-
-    @Provides
-    @Singleton
-    fun provideResourceProvider(
-        contentResolver: ContentResolver
-    ): ImageResourceProvider {
-        return ImageResourceProviderImpl(contentResolver)
-    }
-
-    @Provides
-    @Singleton
-    fun provideS3Config(): S3Config {
-        return S3ConfigImpl()
-    }
-
-    @Provides
-    @Singleton
     fun provideAvatarUploader(
-        s3Config: S3Config
+        @Named("avatars") s3Config: S3Config
     ): AvatarUploader {
         return AvatarUploaderImpl(s3Config)
     }
