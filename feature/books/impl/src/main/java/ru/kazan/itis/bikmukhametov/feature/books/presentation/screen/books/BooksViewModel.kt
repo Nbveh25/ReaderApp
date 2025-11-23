@@ -44,7 +44,7 @@ internal class BooksViewModel @Inject constructor(
             is BooksIntent.BookClicked -> handleBookClicked(intent.bookId)
             is BooksIntent.DeleteBookClicked -> handleDeleteBook(intent.bookId)
             is BooksIntent.DownloadBookClicked -> handleDownloadBook(intent.bookId)
-            is BooksIntent.RefreshClicked -> loadBooks()
+            is BooksIntent.RefreshClicked -> refreshBooks()
             is BooksIntent.RetryClicked -> loadBooks()
         }
     }
@@ -69,6 +69,37 @@ internal class BooksViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
+                        error = stringResourceProvider.getString(
+                            R.string.books_error_load_books,
+                            e.message ?: ""
+                        ),
+                        processingBookId = null
+                    )
+                }
+            }
+        }
+    }
+
+    private fun refreshBooks() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRefreshing = true, error = null) }
+
+            try {
+                val bookModels = getBooksUseCase.invoke()
+                val bookItems = BookMapper.toBookItemList(bookModels)
+
+                _uiState.update {
+                    it.copy(
+                        books = bookItems,
+                        filteredBooks = filterBooks(bookItems, it.searchQuery),
+                        isRefreshing = false,
+                        processingBookId = null
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isRefreshing = false,
                         error = stringResourceProvider.getString(
                             R.string.books_error_load_books,
                             e.message ?: ""
