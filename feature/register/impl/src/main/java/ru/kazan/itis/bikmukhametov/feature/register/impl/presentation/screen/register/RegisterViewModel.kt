@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.register.presentation.screen.register
+package ru.kazan.itis.bikmukhametov.feature.register.impl.presentation.screen.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +16,6 @@ import ru.kazan.itis.bikmukhametov.feature.register.api.usecase.RegisterUseCase
 import ru.kazan.itis.bikmukhametov.feature.register.R
 import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import java.io.IOException
-import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel

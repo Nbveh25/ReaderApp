@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.register.presentation.screen.register
+package ru.kazan.itis.bikmukhametov.feature.register.impl.presentation.screen.register
 
 data class RegisterState(
     val emailInput: String = "",

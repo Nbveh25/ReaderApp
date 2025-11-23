@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.register.di
+package ru.kazan.itis.bikmukhametov.feature.register.impl.di
 
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
@@ -7,8 +7,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ru.kazan.itis.bikmukhametov.feature.register.api.repository.RegisterRepository
 import ru.kazan.itis.bikmukhametov.feature.register.api.usecase.RegisterUseCase
-import ru.kazan.itis.bikmukhametov.feature.register.data.repository.RegisterRepositoryImpl
-import ru.kazan.itis.bikmukhametov.feature.register.domain.usecase.RegisterUseCaseImpl
+import ru.kazan.itis.bikmukhametov.feature.register.impl.data.repository.RegisterRepositoryImpl
+import ru.kazan.itis.bikmukhametov.feature.register.impl.domain.usecase.RegisterUseCaseImpl
 import javax.inject.Singleton
 
 @Module

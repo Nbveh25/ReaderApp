@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.register.domain.usecase
+package ru.kazan.itis.bikmukhametov.feature.register.impl.domain.usecase
 
 import ru.kazan.itis.bikmukhametov.feature.register.api.repository.RegisterRepository
 import ru.kazan.itis.bikmukhametov.feature.register.api.usecase.RegisterUseCase
@@ -12,4 +12,3 @@ internal class RegisterUseCaseImpl @Inject constructor(
         return registerRepository.registerWithEmailAndPassword(email, password)
     }
 }
-

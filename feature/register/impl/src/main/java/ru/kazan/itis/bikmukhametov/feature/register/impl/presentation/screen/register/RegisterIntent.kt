@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.register.presentation.screen.register
+package ru.kazan.itis.bikmukhametov.feature.register.impl.presentation.screen.register
 
 sealed interface RegisterIntent {
     data class EmailChanged(val email: String) : RegisterIntent

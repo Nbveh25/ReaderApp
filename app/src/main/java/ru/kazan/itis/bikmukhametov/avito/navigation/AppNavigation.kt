@@ -10,7 +10,7 @@ import ru.kazan.itis.bikmukhametov.feature.auth.presentation.screen.auth.AuthScr
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.BooksScreen
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ProfileScreen
 import ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.reading.ReadingScreen
-import ru.kazan.itis.bikmukhametov.feature.register.presentation.screen.register.RegisterScreen
+import ru.kazan.itis.bikmukhametov.feature.register.impl.presentation.screen.register.RegisterScreen
 import ru.kazan.itis.bikmukhametov.feature.upload.impl.presentation.screen.upload.UploadScreen
 
 @Composable

@@ -1,4 +1,4 @@
-package ru.kazan.itis.bikmukhametov.feature.register.data.repository
+package ru.kazan.itis.bikmukhametov.feature.register.impl.data.repository
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -27,4 +27,3 @@ internal class RegisterRepositoryImpl @Inject constructor(
         }
     }
 }
-
