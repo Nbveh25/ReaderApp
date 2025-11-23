@@ -5,7 +5,7 @@ import ru.kazan.itis.bikmukhametov.feature.upload.api.usecase.SaveFileLocallyUse
 import java.io.InputStream
 import javax.inject.Inject
 
-class SaveFileLocallyUseCaseImpl @Inject constructor(
+internal class SaveFileLocallyUseCaseImpl @Inject constructor(
     private val localFileStorage: LocalFileStorage
 ) : SaveFileLocallyUseCase {
 

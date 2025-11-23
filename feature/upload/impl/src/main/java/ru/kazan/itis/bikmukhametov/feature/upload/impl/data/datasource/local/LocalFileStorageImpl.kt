@@ -7,7 +7,7 @@ import java.io.InputStream
 import javax.inject.Inject
 import ru.kazan.itis.bikmukhametov.feature.upload.api.datasource.local.LocalFileStorage
 
-class LocalFileStorageImpl @Inject constructor(
+internal class LocalFileStorageImpl @Inject constructor(
     private val context: Context
 ) : LocalFileStorage {
     companion object {

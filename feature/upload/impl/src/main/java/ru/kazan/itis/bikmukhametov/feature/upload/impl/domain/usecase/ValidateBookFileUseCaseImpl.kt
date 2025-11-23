@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.upload.api.usecase.ValidateBookFileUs
 import ru.kazan.itis.bikmukhametov.feature.upload.impl.util.BookFileValidator
 import javax.inject.Inject
 
-class ValidateBookFileUseCaseImpl @Inject constructor() : ValidateBookFileUseCase {
+internal class ValidateBookFileUseCaseImpl @Inject constructor() : ValidateBookFileUseCase {
 
     override suspend fun invoke(fileName: String, fileSize: Long): Result<Unit> {
         return BookFileValidator.validate(fileName, fileSize)

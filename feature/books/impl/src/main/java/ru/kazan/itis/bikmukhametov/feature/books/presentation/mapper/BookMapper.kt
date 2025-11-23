@@ -3,7 +3,7 @@ package ru.kazan.itis.bikmukhametov.feature.books.presentation.mapper
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.model.BookItem
 import ru.kazan.itis.bikmukhametov.model.BookModel
 
-object BookMapper {
+internal object BookMapper {
     fun toBookItem(bookModel: BookModel): BookItem {
         return BookItem(
             id = bookModel.id,

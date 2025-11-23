@@ -4,7 +4,7 @@ import android.util.Patterns
 import ru.kazan.itis.bikmukhametov.feature.auth.api.util.InputValidator
 import javax.inject.Inject
 
-class InputValidatorImpl @Inject constructor() : InputValidator {
+internal class InputValidatorImpl @Inject constructor() : InputValidator {
 
     override fun isValidEmail(email: String): Boolean {
         return email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()

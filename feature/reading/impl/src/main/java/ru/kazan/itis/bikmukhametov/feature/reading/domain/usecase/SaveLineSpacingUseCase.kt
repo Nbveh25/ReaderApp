@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingReposit
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveLineSpacingUseCase
 import javax.inject.Inject
 
-class SaveLineSpacingUseCaseImpl @Inject constructor(
+internal class SaveLineSpacingUseCaseImpl @Inject constructor(
     private val readingRepository: ReadingRepository
 ) : SaveLineSpacingUseCase {
     override suspend fun invoke(spacing: Int) {

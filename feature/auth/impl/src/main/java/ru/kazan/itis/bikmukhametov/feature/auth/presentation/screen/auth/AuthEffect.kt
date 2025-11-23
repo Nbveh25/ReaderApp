@@ -4,7 +4,7 @@ sealed interface AuthEffect {
 
     data class ShowSnackbar(val message: String) : AuthEffect
 
-    object NavigateToHome : AuthEffect
+    object NavigateToBooks : AuthEffect
 
     object NavigateToRegistration : AuthEffect
 

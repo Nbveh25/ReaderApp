@@ -5,7 +5,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.GetBookUseCase
 import ru.kazan.itis.bikmukhametov.model.BookModel
 import javax.inject.Inject
 
-class GetBookUseCaseImpl @Inject constructor(
+internal class GetBookUseCaseImpl @Inject constructor(
     private val bookRepository: BookRepository,
 ) : GetBookUseCase {
     override suspend fun invoke(bookId: String): Result<BookModel> {

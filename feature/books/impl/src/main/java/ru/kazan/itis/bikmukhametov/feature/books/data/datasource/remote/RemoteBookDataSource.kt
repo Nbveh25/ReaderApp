@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class RemoteBookDataSourceImpl @Inject constructor(
+internal class RemoteBookDataSourceImpl @Inject constructor(
     private val firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth
 ) : RemoteBookDataSourceContract {

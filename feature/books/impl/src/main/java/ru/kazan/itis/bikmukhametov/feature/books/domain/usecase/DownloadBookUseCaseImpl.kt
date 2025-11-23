@@ -7,7 +7,7 @@ import ru.kazan.itis.bikmukhametov.feature.books.data.util.FileStorageManager
 import java.io.IOException
 import javax.inject.Inject
 
-class DownloadBookUseCaseImpl @Inject constructor(
+internal class DownloadBookUseCaseImpl @Inject constructor(
     private val bookDownloader: BookDownloader,
     private val fileStorageManager: FileStorageManager,
     private val localBookDataSource: LocalBookDataSource

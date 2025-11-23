@@ -23,7 +23,7 @@ import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import javax.inject.Inject
 
 @HiltViewModel
-class UploadViewModel @Inject constructor(
+internal class UploadViewModel @Inject constructor(
     private val uploadBookUseCase: UploadBookUseCase,
     private val validateBookFileUseCase: ValidateBookFileUseCase,
     private val readFileUseCase: ReadFileUseCase,

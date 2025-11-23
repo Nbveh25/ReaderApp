@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingReposit
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.GetReadingPositionUseCase
 import javax.inject.Inject
 
-class GetReadingPositionUseCaseImpl @Inject constructor(
+internal class GetReadingPositionUseCaseImpl @Inject constructor(
     private val readingRepository: ReadingRepository
 ) : GetReadingPositionUseCase {
     override suspend fun invoke(bookId: String): Int {

@@ -5,7 +5,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StringResourceProviderImpl @Inject constructor(
+internal class StringResourceProviderImpl @Inject constructor(
     private val context: Context
 ) : StringResourceProvider {
     override fun getString(resId: Int): String {

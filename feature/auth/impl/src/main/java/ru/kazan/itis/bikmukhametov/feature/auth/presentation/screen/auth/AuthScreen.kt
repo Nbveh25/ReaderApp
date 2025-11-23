@@ -52,10 +52,10 @@ import java.util.regex.Pattern
 
 @Composable
 fun AuthScreen(
-    viewModel: AuthViewModel = hiltViewModel(),
-    onNavigateToHome: () -> Unit = {},
-    onNavigateToRegistration: () -> Unit = {}
+    onNavigateToBooks: () -> Unit = {},
+    //onNavigateToRegistration: () -> Unit = {}
 ) {
+    val viewModel: AuthViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val focusManager = LocalFocusManager.current
@@ -64,8 +64,11 @@ fun AuthScreen(
         viewModel.effect.collect { effect ->
             when (effect) {
                 is AuthEffect.ShowSnackbar -> snackbarHostState.showSnackbar(effect.message)
-                AuthEffect.NavigateToHome -> onNavigateToHome()
-                AuthEffect.NavigateToRegistration -> onNavigateToRegistration()
+                AuthEffect.NavigateToBooks -> onNavigateToBooks()
+                AuthEffect.NavigateToRegistration -> {
+                    //TODO() onNavigateToRegistration()
+                }
+
                 AuthEffect.StartGoogleSignInFlow -> {
                     // TODO: Реализовать запуск Google Sign-In
                 }
@@ -79,7 +82,11 @@ fun AuthScreen(
             AppTopBar(
                 title = stringResource(R.string.auth_title),
                 endContent = {
-                    TextButton(onClick = onNavigateToRegistration) {
+                    TextButton(
+                        onClick = {
+                            //ttodo
+                        }
+                    ) {
                         Text(stringResource(R.string.auth_registration_action))
                     }
                 }

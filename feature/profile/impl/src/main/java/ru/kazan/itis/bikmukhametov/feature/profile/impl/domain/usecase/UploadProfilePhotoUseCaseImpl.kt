@@ -5,7 +5,7 @@ import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UploadProfilePhot
 import java.io.InputStream
 import javax.inject.Inject
 
-class UploadProfilePhotoUseCaseImpl @Inject constructor(
+internal class UploadProfilePhotoUseCaseImpl @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : UploadProfilePhotoUseCase {
 

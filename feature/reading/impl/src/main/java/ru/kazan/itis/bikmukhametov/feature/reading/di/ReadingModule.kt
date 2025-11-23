@@ -33,7 +33,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ReadingModule {
+internal object ReadingModule {
 
     @Provides
     @Singleton

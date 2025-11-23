@@ -21,7 +21,7 @@ import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
 import javax.inject.Inject
 
 @HiltViewModel
-class BooksViewModel @Inject constructor(
+internal class BooksViewModel @Inject constructor(
     private val getBooksUseCase: GetBooksUseCase,
     private val downloadBookUseCase: DownloadBookUseCase,
     private val localBookDataSource: LocalBookDataSource,

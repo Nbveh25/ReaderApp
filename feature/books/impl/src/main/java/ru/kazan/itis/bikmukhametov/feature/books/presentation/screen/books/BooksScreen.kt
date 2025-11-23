@@ -1,5 +1,6 @@
 package ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,11 +33,12 @@ import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.ui.Bo
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.ui.EmptySearchState
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.ui.SearchBar
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BooksScreen(
-    viewModel: BooksViewModel = hiltViewModel(),
     onNavigateToReading: (String) -> Unit = {}
 ) {
+    val viewModel: BooksViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -76,7 +78,7 @@ fun BooksScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(top = paddingValues.calculateTopPadding())
         ) {
             when {
                 uiState.isLoading && uiState.books.isEmpty() -> {

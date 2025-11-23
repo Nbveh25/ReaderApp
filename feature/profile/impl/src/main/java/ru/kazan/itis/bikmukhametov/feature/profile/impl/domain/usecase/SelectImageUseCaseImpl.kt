@@ -8,7 +8,7 @@ import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCas
 import java.io.IOException
 import javax.inject.Inject
 
-class SelectImageUseCaseImpl @Inject constructor(
+internal class SelectImageUseCaseImpl @Inject constructor(
     private val imageResourceProvider: ImageResourceProvider
 ) : SelectImageUseCase {
 

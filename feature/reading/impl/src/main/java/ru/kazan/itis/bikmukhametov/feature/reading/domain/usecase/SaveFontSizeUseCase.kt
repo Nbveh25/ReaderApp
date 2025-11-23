@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingReposit
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveFontSizeUseCase
 import javax.inject.Inject
 
-class SaveFontSizeUseCaseImpl @Inject constructor(
+internal class SaveFontSizeUseCaseImpl @Inject constructor(
     private val readingRepository: ReadingRepository
 ) : SaveFontSizeUseCase {
     override suspend fun invoke(size: Int) {

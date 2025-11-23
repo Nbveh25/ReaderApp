@@ -5,7 +5,7 @@ import ru.kazan.itis.bikmukhametov.feature.profile.api.repository.ProfileReposit
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.GetUserProfileUseCase
 import javax.inject.Inject
 
-class GetUserProfileUseCaseImpl @Inject constructor(
+internal class GetUserProfileUseCaseImpl @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : GetUserProfileUseCase {
 

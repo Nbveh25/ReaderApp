@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.profile.api.repository.ProfileReposit
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SignOutUseCase
 import javax.inject.Inject
 
-class SignOutUseCaseImpl @Inject constructor(
+internal class SignOutUseCaseImpl @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : SignOutUseCase {
 

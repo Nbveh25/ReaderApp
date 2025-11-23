@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.auth.api.repository.AuthRepository
 import ru.kazan.itis.bikmukhametov.feature.auth.api.usecase.LoginUseCase
 import javax.inject.Inject
 
-class LoginUseCaseImpl @Inject constructor(
+internal class LoginUseCaseImpl @Inject constructor(
     private val authRepository: AuthRepository
 ) : LoginUseCase {
 

@@ -24,7 +24,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object BooksModule {
+internal object BooksModule {
 
     @Provides
     @Singleton

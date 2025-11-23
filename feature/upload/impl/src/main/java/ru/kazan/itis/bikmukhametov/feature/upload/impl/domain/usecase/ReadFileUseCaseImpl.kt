@@ -11,7 +11,7 @@ import javax.inject.Inject
 /**
  * Реализация use case для чтения файла.
  */
-class ReadFileUseCaseImpl @Inject constructor(
+internal class ReadFileUseCaseImpl @Inject constructor(
     private val imageResourceProvider: ImageResourceProvider
 ) : ReadFileUseCase {
 

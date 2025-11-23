@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import ru.kazan.itis.bikmukhametov.feature.reading.api.data.ReadingPreferences
 import androidx.core.content.edit
 
-class ReadingPreferencesImpl(
+internal class ReadingPreferencesImpl(
     context: Context
 ) : ReadingPreferences {
     private val prefs: SharedPreferences = context.getSharedPreferences(

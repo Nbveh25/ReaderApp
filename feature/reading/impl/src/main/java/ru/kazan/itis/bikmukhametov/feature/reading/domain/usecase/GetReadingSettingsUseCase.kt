@@ -5,7 +5,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingReposit
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.GetReadingSettingsUseCase
 import javax.inject.Inject
 
-class GetReadingSettingsUseCaseImpl @Inject constructor(
+internal class GetReadingSettingsUseCaseImpl @Inject constructor(
     private val readingRepository: ReadingRepository
 ) : GetReadingSettingsUseCase {
     override suspend fun invoke(): ReadingSettingsModel {

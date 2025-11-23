@@ -10,7 +10,7 @@ import javax.inject.Inject
 /**
  * Реализация use case для загрузки книги.
  */
-class UploadBookUseCaseImpl @Inject constructor(
+internal class UploadBookUseCaseImpl @Inject constructor(
     private val bookUploader: BookUploader,
     private val bookRepository: BookRepository
 ) : UploadBookUseCase {

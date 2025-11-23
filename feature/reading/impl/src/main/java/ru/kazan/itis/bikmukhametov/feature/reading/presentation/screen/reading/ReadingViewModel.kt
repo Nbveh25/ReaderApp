@@ -25,7 +25,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveThemeModeUseC
 import javax.inject.Inject
 
 @HiltViewModel
-class ReadingViewModel @Inject constructor(
+internal class ReadingViewModel @Inject constructor(
     private val getBookUseCase: GetBookUseCase,
     private val readBookFileUseCase: ReadBookFileUseCase,
     private val deleteBookUseCase: DeleteBookUseCase,

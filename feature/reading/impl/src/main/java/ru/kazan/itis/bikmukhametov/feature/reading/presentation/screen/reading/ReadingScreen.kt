@@ -28,9 +28,9 @@ import ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.reading.u
 fun ReadingScreen(
     bookId: String,
     onNavigateBack: () -> Unit,
-    viewModel: ReadingViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
+    val viewModel: ReadingViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 

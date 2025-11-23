@@ -1,6 +1,6 @@
 package ru.kazan.itis.bikmukhametov.feature.auth.data.util
 
-object FirebaseErrorMapper {
+internal object FirebaseErrorMapper {
     fun mapError(errorCode: String): String {
         return when (errorCode) {
             "ERROR_INVALID_EMAIL" -> "Неверный формат email"

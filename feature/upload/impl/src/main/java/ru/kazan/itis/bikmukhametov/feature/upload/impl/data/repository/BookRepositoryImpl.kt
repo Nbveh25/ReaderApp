@@ -7,7 +7,7 @@ import ru.kazan.itis.bikmukhametov.feature.upload.api.repository.BookRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class BookRepositoryImpl @Inject constructor(
+internal class BookRepositoryImpl @Inject constructor(
     private val firestore: FirebaseFirestore
 ) : BookRepository {
 

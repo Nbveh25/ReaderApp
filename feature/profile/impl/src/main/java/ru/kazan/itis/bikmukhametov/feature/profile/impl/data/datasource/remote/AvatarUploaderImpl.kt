@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-class AvatarUploaderImpl @Inject constructor(
+internal class AvatarUploaderImpl @Inject constructor(
     private val s3Config: S3Config
 ) : AvatarUploader {
 

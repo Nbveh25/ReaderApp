@@ -1,5 +1,6 @@
 package ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,11 +36,12 @@ import ru.kazan.itis.bikmukhametov.feature.profile.impl.R
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.ProfileAvatar
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ui.UserInfoCard
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileScreen(
-    viewModel: ProfileViewModel = hiltViewModel(),
     onLogoutClick: () -> Unit = {}
 ) {
+    val viewModel: ProfileViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -50,9 +52,11 @@ fun ProfileScreen(
                 is ProfileEffect.ShowMessage -> {
                     snackbarHostState.showSnackbar(effect.message)
                 }
+
                 is ProfileEffect.NavigateToAuth -> {
                     onLogoutClick()
                 }
+
                 is ProfileEffect.OpenImagePicker -> {
                     // Открывается через launcher
                 }
@@ -82,12 +86,14 @@ fun ProfileScreen(
             uiState.isLoading && uiState.userProfile == null -> {
                 LoadingState()
             }
+
             uiState.error != null && uiState.userProfile == null -> {
                 ErrorState(
                     error = uiState.error ?: stringResource(R.string.profile_error_unknown),
                     onRetry = { viewModel.onIntent(ProfileIntent.RetryClicked) }
                 )
             }
+
             else -> {
                 ProfileContent(
                     state = uiState,
@@ -98,7 +104,7 @@ fun ProfileScreen(
                     },
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues)
+                        .padding(top = paddingValues.calculateTopPadding())
                 )
             }
         }
@@ -208,7 +214,9 @@ private fun ProfileContent(
         AppOutlinedButton(
             text = stringResource(R.string.profile_logout),
             onClick = { onIntent(ProfileIntent.LogoutClicked) },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
         )
     }
 }

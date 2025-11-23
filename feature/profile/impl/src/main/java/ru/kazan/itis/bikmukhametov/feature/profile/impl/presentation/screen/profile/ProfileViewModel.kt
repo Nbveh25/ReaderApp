@@ -25,7 +25,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
+internal class ProfileViewModel @Inject constructor(
     private val getUserProfileUseCase: GetUserProfileUseCase,
     private val updateUserNameUseCase: UpdateUserNameUseCase,
     private val uploadProfilePhotoUseCase: UploadProfilePhotoUseCase,

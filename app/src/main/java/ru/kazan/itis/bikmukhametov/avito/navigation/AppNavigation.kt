@@ -25,14 +25,14 @@ fun AppNavigation(
         ) {
             composable(Routes.AUTH) {
                 AuthScreen(
-                    onNavigateToHome = {
+                    onNavigateToBooks = {
                         navController.navigate(Routes.BOOKS) {
                             popUpTo(Routes.AUTH) { inclusive = true }
                         }
                     },
-                    onNavigateToRegistration = {
+                    /*onNavigateToRegistration = {
                         navController.navigate(Routes.PROFILE) // TODO()
-                    }
+                    }*/
                 )
             }
 

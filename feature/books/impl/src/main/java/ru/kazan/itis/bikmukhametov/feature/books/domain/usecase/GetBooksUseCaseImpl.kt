@@ -5,7 +5,7 @@ import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.GetBooksUseCase
 import ru.kazan.itis.bikmukhametov.model.BookModel
 import javax.inject.Inject
 
-class GetBooksUseCaseImpl @Inject constructor(
+internal class GetBooksUseCaseImpl @Inject constructor(
     private val bookRepository: BookRepository
 ) : GetBooksUseCase {
 

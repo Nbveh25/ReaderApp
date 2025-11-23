@@ -12,7 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookDownloaderImpl @Inject constructor(
+internal class BookDownloaderImpl @Inject constructor(
     private val okHttpClient: OkHttpClient
 ) : BookDownloaderContract {
 

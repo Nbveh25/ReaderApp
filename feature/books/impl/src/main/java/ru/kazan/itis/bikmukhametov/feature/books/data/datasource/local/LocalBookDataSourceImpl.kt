@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.local.LocalBookD
 import ru.kazan.itis.bikmukhametov.feature.books.data.util.FileStorageManager
 import javax.inject.Inject
 
-class LocalBookDataSourceImpl @Inject constructor(
+internal class LocalBookDataSourceImpl @Inject constructor(
     private val fileStorageManager: FileStorageManager
 ) : LocalBookDataSource {
 

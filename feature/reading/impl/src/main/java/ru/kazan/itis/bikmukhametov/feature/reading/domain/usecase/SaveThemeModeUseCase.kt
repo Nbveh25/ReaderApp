@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.api.repository.ReadingReposit
 import ru.kazan.itis.bikmukhametov.feature.reading.api.usecase.SaveThemeModeUseCase
 import javax.inject.Inject
 
-class SaveThemeModeUseCaseImpl @Inject constructor(
+internal class SaveThemeModeUseCaseImpl @Inject constructor(
     private val readingRepository: ReadingRepository
 ) : SaveThemeModeUseCase {
     override suspend fun invoke(mode: Int) {

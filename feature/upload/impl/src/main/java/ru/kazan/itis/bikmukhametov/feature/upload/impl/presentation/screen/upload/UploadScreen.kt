@@ -1,5 +1,6 @@
 package ru.kazan.itis.bikmukhametov.feature.upload.impl.presentation.screen.upload
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,10 +30,10 @@ import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppPrimaryButton
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTextField
 import ru.kazan.itis.bikmukhametov.core.ui.appuicomponent.AppTopBar
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun UploadScreen(
-    viewModel: UploadViewModel = hiltViewModel()
-) {
+fun UploadScreen() {
+    val viewModel: UploadViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
 
@@ -82,7 +83,7 @@ fun UploadScreen(
             onRetryClick = { viewModel.onIntent(UploadIntent.RetryClicked) },
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .padding(top = paddingValues.calculateTopPadding())
         )
     }
 }

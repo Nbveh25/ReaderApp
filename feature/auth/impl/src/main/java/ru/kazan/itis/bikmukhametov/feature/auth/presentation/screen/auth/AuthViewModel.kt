@@ -21,7 +21,7 @@ import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor(
+internal class AuthViewModel @Inject constructor(
     private val inputValidator: InputValidator,
     private val loginUseCase: LoginUseCase,
     private val getCurrentUserUseCase: GetCurrentUserUseCase,
@@ -55,7 +55,7 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             val currentUser = getCurrentUserUseCase.invoke()
             if (currentUser != null) {
-                _effect.emit(AuthEffect.NavigateToHome)
+                _effect.emit(AuthEffect.NavigateToBooks)
             }
         }
     }
@@ -115,7 +115,7 @@ class AuthViewModel @Inject constructor(
                     _uiState.value.passwordInput
                 ).onSuccess {
                     _effect.emit(AuthEffect.ShowSnackbar(stringResourceProvider.getString(R.string.auth_message_login_success)))
-                    _effect.emit(AuthEffect.NavigateToHome)
+                    _effect.emit(AuthEffect.NavigateToBooks)
                 }.onFailure { error ->
                     handleLoginError(error)
                 }

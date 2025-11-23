@@ -2,7 +2,7 @@ package ru.kazan.itis.bikmukhametov.feature.upload.impl.util
 
 import java.io.IOException
 
-object BookFileValidator {
+internal object BookFileValidator {
 
     private val ALLOWED_EXTENSIONS = listOf("txt", "epub", "pdf")
     private const val MAX_FILE_SIZE_BYTES = 100 * 1024 * 1024

@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ReadingRepositoryImpl @Inject constructor(
+internal class ReadingRepositoryImpl @Inject constructor(
     private val readingPreferences: ReadingPreferences
 ) : ReadingRepository {
     

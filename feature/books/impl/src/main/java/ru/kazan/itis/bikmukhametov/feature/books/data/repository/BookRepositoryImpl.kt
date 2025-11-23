@@ -6,7 +6,7 @@ import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
 import ru.kazan.itis.bikmukhametov.model.BookModel
 import javax.inject.Inject
 
-class BookRepositoryImpl @Inject constructor(
+internal class BookRepositoryImpl @Inject constructor(
     private val remoteBookDataSource: RemoteBookDataSource,
     private val localBookDataSource: LocalBookDataSource
 ) : BookRepository {

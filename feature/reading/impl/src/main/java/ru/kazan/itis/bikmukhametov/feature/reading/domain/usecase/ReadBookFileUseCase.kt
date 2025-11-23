@@ -8,7 +8,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import javax.inject.Inject
 
-class ReadBookFileUseCaseImpl @Inject constructor() : ReadBookFileUseCase {
+internal class ReadBookFileUseCaseImpl @Inject constructor() : ReadBookFileUseCase {
     override suspend fun invoke(filePath: String, format: BookFormat): Result<String> {
         return withContext(Dispatchers.IO) {
             try {

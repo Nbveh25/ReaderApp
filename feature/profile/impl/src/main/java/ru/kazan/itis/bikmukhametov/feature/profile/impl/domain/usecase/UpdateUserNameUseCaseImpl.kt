@@ -4,7 +4,7 @@ import ru.kazan.itis.bikmukhametov.feature.profile.api.repository.ProfileReposit
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.UpdateUserNameUseCase
 import javax.inject.Inject
 
-class UpdateUserNameUseCaseImpl @Inject constructor(
+internal class UpdateUserNameUseCaseImpl @Inject constructor(
     private val profileRepository: ProfileRepository
 ) : UpdateUserNameUseCase {
 

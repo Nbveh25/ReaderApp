@@ -13,7 +13,7 @@ import javax.inject.Singleton
 import androidx.core.net.toUri
 
 @Singleton
-class ProfileRepositoryImpl @Inject constructor(
+internal class ProfileRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val avatarUploader: AvatarUploader
 ) : ProfileRepository {

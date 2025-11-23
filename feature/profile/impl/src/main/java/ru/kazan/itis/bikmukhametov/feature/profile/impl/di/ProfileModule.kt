@@ -26,7 +26,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ProfileModule {
+internal object ProfileModule {
 
     @Provides
     @Singleton
