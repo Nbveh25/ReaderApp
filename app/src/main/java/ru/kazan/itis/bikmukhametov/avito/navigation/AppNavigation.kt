@@ -10,6 +10,7 @@ import ru.kazan.itis.bikmukhametov.feature.auth.presentation.screen.auth.AuthScr
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books.BooksScreen
 import ru.kazan.itis.bikmukhametov.feature.profile.impl.presentation.screen.profile.ProfileScreen
 import ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.reading.ReadingScreen
+import ru.kazan.itis.bikmukhametov.feature.register.presentation.screen.register.RegisterScreen
 import ru.kazan.itis.bikmukhametov.feature.upload.impl.presentation.screen.upload.UploadScreen
 
 @Composable
@@ -30,9 +31,22 @@ fun AppNavigation(
                             popUpTo(Routes.AUTH) { inclusive = true }
                         }
                     },
-                    /*onNavigateToRegistration = {
-                        navController.navigate(Routes.PROFILE) // TODO()
-                    }*/
+                    onNavigateToRegistration = {
+                        navController.navigate(Routes.REGISTER)
+                    }
+                )
+            }
+
+            composable(Routes.REGISTER) {
+                RegisterScreen(
+                    onNavigateToBooks = {
+                        navController.navigate(Routes.BOOKS) {
+                            popUpTo(Routes.AUTH) { inclusive = true }
+                        }
+                    },
+                    onNavigateBack = {
+                        navController.popBackStack()
+                    }
                 )
             }
 

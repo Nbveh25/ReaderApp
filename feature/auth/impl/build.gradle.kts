@@ -41,6 +41,7 @@ android {
 dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:resources"))
+    implementation(project(":core:firebase"))
     implementation(project(":feature:auth:api"))
 
     // Firebase

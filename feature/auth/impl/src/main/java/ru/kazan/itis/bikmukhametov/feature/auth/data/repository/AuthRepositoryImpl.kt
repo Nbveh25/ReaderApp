@@ -4,8 +4,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.tasks.await
+import ru.kazan.itis.bikmukhametov.core.firebase.util.FirebaseErrorMapper
 import ru.kazan.itis.bikmukhametov.feature.auth.api.repository.AuthRepository
-import ru.kazan.itis.bikmukhametov.feature.auth.data.util.FirebaseErrorMapper
 import javax.inject.Inject
 import javax.inject.Singleton
 

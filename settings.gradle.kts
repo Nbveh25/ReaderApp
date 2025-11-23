@@ -50,3 +50,7 @@ include(":feature:reading:impl")
 include(":feature:upload")
 include(":feature:upload:api")
 include(":feature:upload:impl")
+
+include(":feature:register")
+include(":feature:register:api")
+include(":feature:register:impl")

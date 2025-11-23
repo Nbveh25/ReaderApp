@@ -6,6 +6,7 @@ package ru.kazan.itis.bikmukhametov.avito.navigation
  */
 object Routes {
     const val AUTH = "auth"
+    const val REGISTER = "register"
     const val BOOKS = "books"
     const val PROFILE = "profile"
     const val READING = "reading"
