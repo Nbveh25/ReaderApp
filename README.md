@@ -52,7 +52,6 @@ app/
 - **Firebase**
   - Authentication
   - Firestore
-  - Storage
 
 - **Navigation**
   - Navigation Compose 2.9.6
@@ -233,6 +232,7 @@ cd Avito
 
 ### Видео демонстрация
 
+📹 **Скринкаст приложения**: [Смотреть на Yandex Disk](https://disk.yandex.ru/client/disk/avito)
 
 
 
