@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -41,6 +42,13 @@ android {
         compose = true
     }
 }
+
+detekt {
+    toolVersion = libs.versions.detekt.get()
+    config.setFrom(file("../config/detekt/detekt.yml"))
+    buildUponDefaultConfig = true
+}
+
 
 dependencies {
     implementation(project(":core:ui"))

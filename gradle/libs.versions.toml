@@ -3,12 +3,12 @@ minSdk = "24"
 targetSdk = "36"
 compileSdk = "36"
 
-
-
 agp = "8.13.1"
 
 # Kotlin
 kotlin = "2.2.10"
+
+detekt = "1.23.8"
 
 # Coroutines
 coroutines = "1.10.2"
@@ -20,8 +20,6 @@ composeBom = "2025.11.00"
 androidx-core = "1.17.0"
 androidx-activityCompose = "1.11.0"
 androidx-lifecycle = "2.9.4"
-androidx-appcompat = "1.7.0"
-material = "1.12.0"
 
 # Firebase
 firebaseBom = "34.6.0"
@@ -44,6 +42,9 @@ navigation = "2.9.6"
 # Okhttp
 okhttp = "5.3.2"
 
+# Retrofit
+retrofit = "3.0.0"
+
 # Coil
 coil = "2.7.0"
 
@@ -62,7 +63,6 @@ lottie = "6.1.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-core = "1.17.0"
 
 
 
@@ -73,11 +73,9 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activityCompose" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -101,19 +99,20 @@ navigation = { group = "androidx.navigation", name = "navigation-compose", versi
 
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 com-amazon-ycos = { group = "com.amazonaws", name = "aws-android-sdk-s3", version.ref = "ycos" }
 
-pdf-reader = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdf"}
+pdf-reader = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdf" }
 
-epub-reader = {group = "org.jsoup", name = "jsoup", version.ref = "epub"}
+epub-reader = { group = "org.jsoup", name = "jsoup", version.ref = "epub" }
 
-lottie-animation = {group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie"}
+lottie-animation = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
-androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
 
 
 
@@ -127,3 +126,5 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

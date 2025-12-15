@@ -27,6 +27,12 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideRetrofit() {
+        //return Retr
+    }
+
+    @Provides
+    @Singleton
     @Named("avatars")
     fun provideAvatarsS3Config(): S3Config {
         return S3ConfigImpl(bucketName = "avitio-avatars")

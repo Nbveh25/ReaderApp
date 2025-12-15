@@ -13,30 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
-sealed class BottomNavItem(
-    val route: String,
-    val title: String,
-    val icon: androidx.compose.ui.graphics.vector.ImageVector
-) {
-    object Books : BottomNavItem(
-        route = Routes.BOOKS,
-        title = "Книги",
-        icon = Icons.Default.Book
-    )
-
-    object Upload : BottomNavItem(
-        route = Routes.UPLOAD,
-        title = "Загрузка",
-        icon = Icons.Default.Upload
-    )
-
-    object Profile : BottomNavItem(
-        route = Routes.PROFILE,
-        title = "Профиль",
-        icon = Icons.Default.Person
-    )
-}
-
 @Composable
 fun AppBottomNavigation(navController: NavController) {
     val items = listOf(
@@ -87,3 +63,26 @@ fun AppBottomNavigation(navController: NavController) {
     }
 }
 
+sealed class BottomNavItem(
+    val route: String,
+    val title: String,
+    val icon: androidx.compose.ui.graphics.vector.ImageVector
+) {
+    object Books : BottomNavItem(
+        route = Routes.BOOKS,
+        title = "Книги",
+        icon = Icons.Default.Book
+    )
+
+    object Upload : BottomNavItem(
+        route = Routes.UPLOAD,
+        title = "Загрузка",
+        icon = Icons.Default.Upload
+    )
+
+    object Profile : BottomNavItem(
+        route = Routes.PROFILE,
+        title = "Профиль",
+        icon = Icons.Default.Person
+    )
+}
