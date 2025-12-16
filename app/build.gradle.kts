@@ -1,3 +1,5 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -43,11 +45,24 @@ android {
     }
 }
 
+
 detekt {
     toolVersion = libs.versions.detekt.get()
-    config.setFrom(file("../config/detekt/detekt.yml"))
+
+    //config.setFrom(file("../config/detekt/detekt.yml"))
+    config.setFrom(files("${rootProject.projectDir}/config/detekt/detekt.yml"))
+
     buildUponDefaultConfig = true
+    allRules = false
+    ignoreFailures = false
+
+    //buildUponDefaultConfig = true
+    source = files(
+        rootProject.projectDir // анализируем ВЕСЬ проект
+    )
+    
 }
+
 
 
 dependencies {
