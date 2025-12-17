@@ -14,6 +14,7 @@ plugins {
     alias(libs.plugins.detekt) apply false
 }
 
+
 private val versionMajor = 1
 private val versionMinor = 0
 

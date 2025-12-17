@@ -1,6 +1,9 @@
 package ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.reading.ui
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.delay
+
+private const val LINE_HEIGHT_MULTIPLIER_COMPACT = 1.2f
+private const val LINE_HEIGHT_MULTIPLIER_NORMAL = 1.5f
+private const val LINE_HEIGHT_MULTIPLIER_LOOSE = 1.8f
 
 @Composable
 fun ReadingContent(
@@ -45,10 +52,10 @@ fun ReadingContent(
 
     // интервал между строками
     val lineHeight = when (lineSpacing) {
-        1 -> textSize * 1.2f
-        2 -> textSize * 1.5f
-        3 -> textSize * 1.8f
-        else -> textSize * 1.5f
+        1 -> textSize * LINE_HEIGHT_MULTIPLIER_COMPACT
+        2 -> textSize * LINE_HEIGHT_MULTIPLIER_NORMAL
+        3 -> textSize * LINE_HEIGHT_MULTIPLIER_LOOSE
+        else -> textSize * LINE_HEIGHT_MULTIPLIER_NORMAL
     }
 
     Column(

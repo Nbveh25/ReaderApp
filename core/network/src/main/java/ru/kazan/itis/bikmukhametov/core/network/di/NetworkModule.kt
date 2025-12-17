@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
+private const val NETWORK_TIMEOUT_SECONDS = 30L
+
 @Module
 @InstallIn(SingletonComponent::class)
 internal object NetworkModule {
@@ -19,16 +21,10 @@ internal object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(NETWORK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .readTimeout(NETWORK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .writeTimeout(NETWORK_TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideRetrofit() {
-        //return Retr
     }
 
     @Provides
