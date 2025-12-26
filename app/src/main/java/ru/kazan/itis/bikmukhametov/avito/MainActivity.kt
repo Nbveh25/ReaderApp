@@ -4,17 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.kazan.itis.bikmukhametov.avito.navigation.AppBottomNavigation
-import ru.kazan.itis.bikmukhametov.avito.navigation.AppNavigation
+import ru.kazan.itis.bikmukhametov.avito.navigation.Navigation
+import ru.kazan.itis.bikmukhametov.avito.navigation.Route
 import ru.kazan.itis.bikmukhametov.core.ui.theme.AvitoTheme
 
 @AndroidEntryPoint
@@ -28,18 +31,23 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
+                    val backStack = remember { mutableStateListOf<Any>(Route.Auth) }
                     Scaffold(
                         bottomBar = {
-                            AppBottomNavigation(navController = navController)
+                            AppBottomNavigation(
+                                currentRoute = backStack.lastOrNull(),
+                                onNavigate = { route ->
+                                    backStack.clear()
+                                    backStack.add(route)
+                                }
+                            )
                         }
                     ) { paddingValues ->
-                        AppNavigation(
-                            navController = navController,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(paddingValues)
-                        )
+                        Box(modifier = Modifier.padding(paddingValues)) {
+                            Navigation(
+                                backStack = backStack
+                            )
+                        }
                     }
                 }
             }
