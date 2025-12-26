@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
     alias(libs.plugins.detekt)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 android {
@@ -49,16 +50,14 @@ android {
 detekt {
     toolVersion = libs.versions.detekt.get()
 
-    //config.setFrom(file("../config/detekt/detekt.yml"))
     config.setFrom(files("${rootProject.projectDir}/config/detekt/detekt.yml"))
 
     buildUponDefaultConfig = true
     allRules = false
     ignoreFailures = false
 
-    //buildUponDefaultConfig = true
     source = files(
-        rootProject.projectDir // анализируем ВЕСЬ проект
+        rootProject.projectDir 
     )
     
 }
@@ -82,6 +81,9 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation)
+
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
 
     // Icons
     implementation(libs.androidx.compose.material.icons)

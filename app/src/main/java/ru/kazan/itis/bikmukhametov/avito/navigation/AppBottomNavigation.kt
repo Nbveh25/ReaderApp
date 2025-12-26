@@ -12,24 +12,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation3.runtime.NavKey
 
 @Composable
-fun AppBottomNavigation(navController: NavController) {
+fun AppBottomNavigation(
+    currentRoute: NavKey,
+    onNavigate: (NavKey) -> Unit
+) {
+
     val items = listOf(
         BottomNavItem.Books,
         BottomNavItem.Upload,
         BottomNavItem.Profile
     )
 
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
-    // Показываем BottomNavigation только на основных экранах
-    val showBottomNav = currentRoute in listOf(
-        Routes.BOOKS,
-        Routes.UPLOAD,
-        Routes.PROFILE
-    )
+    val showBottomNav = currentRoute is Route.Books ||
+            currentRoute is Route.Upload ||
+            currentRoute is Route.Profile
 
     if (showBottomNav) {
         NavigationBar {
@@ -45,16 +44,7 @@ fun AppBottomNavigation(navController: NavController) {
                     selected = currentRoute == item.route,
                     onClick = {
                         if (currentRoute != item.route) {
-                            navController.navigate(item.route) {
-                                // Очищаем back stack до начала bottom navigation
-                                popUpTo(Routes.BOOKS) {
-                                    saveState = true
-                                }
-                                // Восстанавливаем состояние при повторном выборе
-                                restoreState = true
-                                // Избегаем множественных копий одного экрана
-                                launchSingleTop = true
-                            }
+                            onNavigate(item.route)
                         }
                     }
                 )
@@ -64,24 +54,24 @@ fun AppBottomNavigation(navController: NavController) {
 }
 
 sealed class BottomNavItem(
-    val route: String,
+    val route: NavKey,
     val title: String,
     val icon: androidx.compose.ui.graphics.vector.ImageVector
 ) {
     object Books : BottomNavItem(
-        route = Routes.BOOKS,
+        route = Route.Books,
         title = "Книги",
         icon = Icons.Default.Book
     )
 
     object Upload : BottomNavItem(
-        route = Routes.UPLOAD,
+        route = Route.Upload,
         title = "Загрузка",
         icon = Icons.Default.Upload
     )
 
     object Profile : BottomNavItem(
-        route = Routes.PROFILE,
+        route = Route.Profile,
         title = "Профиль",
         icon = Icons.Default.Person
     )

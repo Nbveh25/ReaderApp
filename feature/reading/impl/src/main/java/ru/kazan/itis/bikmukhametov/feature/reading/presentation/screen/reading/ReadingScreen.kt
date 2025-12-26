@@ -33,7 +33,7 @@ import ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.reading.u
 @Composable
 fun ReadingScreen(
     bookId: String,
-    onNavigateBack: () -> Unit,
+    onNavigateBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val viewModel: ReadingViewModel = hiltViewModel()
