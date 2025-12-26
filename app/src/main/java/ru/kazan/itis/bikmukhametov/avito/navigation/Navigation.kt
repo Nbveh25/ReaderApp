@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavEntry
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import ru.kazan.itis.bikmukhametov.feature.auth.presentation.screen.auth.AuthScreen
@@ -19,15 +20,19 @@ import ru.kazan.itis.bikmukhametov.feature.upload.impl.presentation.screen.uploa
 
 @Composable
 fun Navigation(
-    backStack: MutableList<Any> = remember { mutableStateListOf() }
+    navigator: Navigator,
 ) {
+    val currentBackStack = navigator.state.backStacks[navigator.state.topLevelRoute]
+        ?: error("BackStack for ${navigator.state.topLevelRoute} not found")
+    
+    // NavBackStack implements List<NavKey>, so we can use it directly
+    @Suppress("UNCHECKED_CAST")
+    val backStackList = currentBackStack as List<NavKey>
 
     NavDisplay(
-        backStack = backStack,
+        backStack = backStackList,
         onBack = {
-            if (backStack.size > 1) {
-                backStack.removeLastOrNull()
-            }
+            navigator.goBack()
         },
         transitionSpec = {
             // Slide in from right when navigating forward
@@ -49,11 +54,10 @@ fun Navigation(
                 is Route.Auth -> NavEntry(key) {
                     AuthScreen(
                         onNavigateToBooks = {
-                            backStack.clear()
-                            backStack.add(Route.Books)
+                            navigator.navigate(Route.Books)
                         },
                         onNavigateToRegistration = {
-                            backStack.add(Route.Register)
+                            navigator.navigate(Route.Register)
                         }
                     )
                 }
@@ -61,11 +65,10 @@ fun Navigation(
                 is Route.Register -> NavEntry(key) {
                     RegisterScreen(
                         onNavigateToBooks = {
-                            backStack.clear()
-                            backStack.add(Route.Books)
+                            navigator.navigate(Route.Books)
                         },
                         onNavigateBack = {
-                            backStack.removeLastOrNull()
+                            navigator.goBack()
                         }
                     )
                 }
@@ -73,7 +76,7 @@ fun Navigation(
                 is Route.Books -> NavEntry(key) {
                     BooksScreen(
                         onNavigateToReading = { id ->
-                            backStack.add(Route.Reading(bookId = id))
+                            navigator.navigate(Route.Reading(bookId = id))
                         }
                     )
                 }
@@ -81,8 +84,7 @@ fun Navigation(
                 is Route.Profile -> NavEntry(key) {
                     ProfileScreen(
                         onLogoutClick = {
-                            backStack.clear()
-                            backStack.add(Route.Auth)
+                            navigator.navigate(Route.Auth)
                         }
                     )
                 }
@@ -91,7 +93,7 @@ fun Navigation(
                     ReadingScreen(
                         bookId = key.bookId,
                         onNavigateBack = {
-                            backStack.removeLastOrNull()
+                            navigator.goBack()
                         }
                     )
                 }
@@ -99,15 +101,12 @@ fun Navigation(
                 is Route.Upload -> NavEntry(key) {
                     UploadScreen(
                         onNavigateToBooks = {
-                            backStack.clear()
-                            backStack.add(Route.Books)
+                            navigator.navigate(Route.Books)
                         }
                     )
                 }
 
-                else -> NavEntry(Unit) {
-                    Unit
-                }
+                else -> error("Unknown key: $key")
             }
         }
     )

@@ -1,14 +1,14 @@
 package ru.kazan.itis.bikmukhametov.avito.navigation
 
+import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable
 
-sealed class Route {
-    data object Auth: Route()
-    data object Register: Route()
-    data object Books: Route()
-    data object Profile: Route()
-    @Serializable
-    data class Reading(val bookId: String): Route()
-    data object Upload: Route()
+object Route {
+    @Serializable object Auth: NavKey
+    @Serializable object Register: NavKey
+    @Serializable object Books: NavKey
+    @Serializable object Profile: NavKey
+    @Serializable data class Reading(val bookId: String): NavKey
+    @Serializable object Upload: NavKey
 }
 

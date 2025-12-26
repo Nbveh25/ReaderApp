@@ -12,11 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation3.runtime.NavKey
 
 @Composable
 fun AppBottomNavigation(
-    currentRoute: Any?,
-    onNavigate: (Any) -> Unit
+    currentRoute: NavKey,
+    onNavigate: (NavKey) -> Unit
 ) {
 
     val items = listOf(
@@ -53,7 +54,7 @@ fun AppBottomNavigation(
 }
 
 sealed class BottomNavItem(
-    val route: Route,
+    val route: NavKey,
     val title: String,
     val icon: androidx.compose.ui.graphics.vector.ImageVector
 ) {
