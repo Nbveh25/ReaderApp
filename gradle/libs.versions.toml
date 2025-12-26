@@ -66,6 +66,8 @@ epub = "1.17.2"
 # lottie
 lottie = "6.1.0"
 
+mockk = "1.14.7"
+
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
@@ -74,6 +76,8 @@ espressoCore = "3.7.0"
 
 
 [libraries]
+mockk = {group = "io.mockk", name = "mockk", version.ref = "mockk"}
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -122,6 +126,7 @@ epub-reader = { group = "org.jsoup", name = "jsoup", version.ref = "epub" }
 lottie-animation = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines"}
 coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
 
 

@@ -78,6 +78,9 @@ dependencies {
     // Lottie
     implementation(libs.lottie.animation)
 
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
