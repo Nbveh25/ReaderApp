@@ -12,5 +12,5 @@ internal class ReadBookFileUseCaseImpl @Inject constructor(
     override suspend fun invoke(filePath: String, format: BookFormat): Result<String> {
         return bookFileRepository.readBookFile(filePath, format)
     }
-}
 
+}

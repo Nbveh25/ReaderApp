@@ -10,8 +10,8 @@ internal class GetBookUseCaseImpl @Inject constructor(
 ) : GetBookUseCase {
     override suspend fun invoke(bookId: String): Result<BookModel> {
         return try {
-            val books = bookRepository.getBooks()
-            val book = books.find { it.id == bookId }
+            val books = bookRepository.getBooks().getOrNull()
+            val book = books?.find { it.id == bookId }
             if (book != null) {
                 Result.success(book)
             } else {

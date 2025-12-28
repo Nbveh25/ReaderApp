@@ -11,22 +11,22 @@ internal class BookRepositoryImpl @Inject constructor(
     private val localBookDataSource: LocalBookDataSource
 ) : BookRepository {
 
-    override suspend fun getBooks(): List<BookModel> {
+    override suspend fun getBooks(): Result<List<BookModel>> {
         // Получаем книги из Firestore
         val remoteBooksResult = remoteBookDataSource.getBooks()
 
         if (remoteBooksResult.isFailure) {
             // В случае ошибки возвращаем пустой список
-            return emptyList()
+            return Result.success(emptyList())
         }
 
-        val remoteBooks = remoteBooksResult.getOrNull() ?: return emptyList()
+        val remoteBooks = remoteBooksResult.getOrNull() ?: return Result.success(emptyList())
 
         // Получаем список ID локально скачанных книг
         val downloadedBookIds = localBookDataSource.getAllDownloadedBookIds().toSet()
 
         // Объединяем данные: обновляем статус скачивания и путь к файлу для локальных книг
-        return remoteBooks.map { book ->
+        return Result.success(remoteBooks.map { book ->
             val isDownloaded = downloadedBookIds.contains(book.id)
             val localFilePath = if (isDownloaded) {
                 localBookDataSource.getBookFilePath(book.id)
@@ -39,6 +39,7 @@ internal class BookRepositoryImpl @Inject constructor(
                 localFilePath = localFilePath
             )
         }
+        )
     }
 
     override suspend fun deleteBook(bookId: String): Result<Boolean> {
