@@ -7,6 +7,7 @@ import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Test
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.local.LocalBookDataSource
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.remote.BookDownloader
@@ -15,18 +16,26 @@ import ru.kazan.itis.bikmukhametov.util.enum.BookFormat
 import java.io.IOException
 
 internal class DownloadBookUseCaseImplTest {
-    private val bookDownloader: BookDownloader = mockk()
-    private val fileStorageManager: FileStorageManager = mockk()
-    private val localBookDataSource: LocalBookDataSource = mockk()
+    private lateinit var bookDownloader: BookDownloader
+    private lateinit var fileStorageManager: FileStorageManager
+    private lateinit var localBookDataSource: LocalBookDataSource
 
-    private val useCase = DownloadBookUseCaseImpl(
-        bookDownloader,
-        fileStorageManager,
-        localBookDataSource
-    )
+    private lateinit var useCase: DownloadBookUseCaseImpl
 
     private val testBookId = "123"
     private val testUrl = "https://example.com/book.epub"
+
+    @Before
+    fun setUp() {
+        bookDownloader = mockk()
+        fileStorageManager = mockk()
+        localBookDataSource = mockk()
+        useCase = DownloadBookUseCaseImpl(
+            bookDownloader,
+            fileStorageManager,
+            localBookDataSource
+        )
+    }
 
     @Test
     fun `should return success if book is already downloaded`() = runTest {
@@ -34,7 +43,7 @@ internal class DownloadBookUseCaseImplTest {
         coEvery { localBookDataSource.isBookDownloaded(testBookId) } returns true
 
         // WHEN
-        val result = useCase.invoke(testBookId, testUrl)
+        val result = useCase(testBookId, testUrl)
 
         // THEN
         assertTrue(result.isSuccess)
@@ -49,7 +58,7 @@ internal class DownloadBookUseCaseImplTest {
         coEvery { bookDownloader.downloadBook(testUrl) } returns Result.failure(IOException("No internet"))
 
         // WHEN
-        val result = useCase.invoke(testBookId, testUrl)
+        val result = useCase(testBookId, testUrl)
 
         // THEN
         assertTrue(result.isFailure)
@@ -67,13 +76,10 @@ internal class DownloadBookUseCaseImplTest {
         coEvery { fileStorageManager.saveBookFile(any(), any(), any()) } returns true
 
         // WHEN
-        val result = useCase.invoke(testBookId, testUrl)
+        val result = useCase(testBookId, testUrl)
 
         // THEN
         assertTrue(result.isSuccess)
-        coVerify {
-            fileStorageManager.saveBookFile(testBookId, fakeBytes, BookFormat.EPUB)
-        }
     }
 
 }

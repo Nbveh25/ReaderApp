@@ -18,13 +18,14 @@ import ru.kazan.itis.bikmukhametov.feature.books.presentation.mapper.BookMapper
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.model.BookItem
 import ru.kazan.itis.bikmukhametov.feature.books.R
 import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
+import ru.kazan.itis.bikmukhametov.feature.books.domain.usecase.DeleteBookByIdUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 internal class BooksViewModel @Inject constructor(
     private val getBooksUseCase: GetBooksUseCase,
     private val downloadBookUseCase: DownloadBookUseCase,
-    private val localBookDataSource: LocalBookDataSource, // TODO()
+    private val deleteBookByIdUseCase: DeleteBookByIdUseCase,
     private val stringResourceProvider: StringResourceProvider
 ) : ViewModel() {
 
@@ -141,7 +142,7 @@ internal class BooksViewModel @Inject constructor(
             _uiState.update { it.copy(processingBookId = bookId) }
 
             try {
-                val deleted = localBookDataSource.deleteBook(bookId)
+                val deleted = deleteBookByIdUseCase(bookId)
 
                 if (deleted) {
                     loadBooks()
@@ -183,7 +184,7 @@ internal class BooksViewModel @Inject constructor(
                 }
 
                 // Скачиваем книгу из Yandex Cloud Storage
-                val downloadResult = downloadBookUseCase.invoke(bookId, fileUrl)
+                val downloadResult = downloadBookUseCase(bookId, fileUrl)
 
                 if (downloadResult.isSuccess) {
                     // Перезагружаем список для синхронизации с репозиторием
@@ -193,19 +194,15 @@ internal class BooksViewModel @Inject constructor(
                     val error = downloadResult.exceptionOrNull()
                     _uiState.update { it.copy(processingBookId = null) }
                     _effect.emit(
-                        BooksEffect.ShowMessage(
-                            error?.message ?: stringResourceProvider.getString(R.string.books_error_download_failed)
-                        )
+                        BooksEffect.ShowMessage(error?.message ?: stringResourceProvider.getString(R.string.books_error_download_failed))
                     )
                 }
             } catch (e: Exception) {
                 _uiState.update { it.copy(processingBookId = null) }
-                _effect.emit(BooksEffect.ShowMessage(
-                    stringResourceProvider.getString(
+                _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(
                         R.string.books_error_download_with_message,
                         e.message ?: ""
-                    )
-                ))
+                    )))
             }
         }
     }
