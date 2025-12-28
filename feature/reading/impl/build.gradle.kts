@@ -75,6 +75,9 @@ dependencies {
     // EPUB reading 
     implementation(libs.epub.reader)
 
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

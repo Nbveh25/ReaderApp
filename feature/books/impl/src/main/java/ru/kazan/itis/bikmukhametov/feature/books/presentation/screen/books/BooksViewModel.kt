@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.local.LocalBookDataSource
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DownloadBookUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.GetBooksUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.mapper.BookMapper
@@ -144,7 +143,7 @@ internal class BooksViewModel @Inject constructor(
             try {
                 val deleted = deleteBookByIdUseCase(bookId)
 
-                if (deleted) {
+                if (deleted.getOrNull() == true) {
                     loadBooks()
                     _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(R.string.books_message_book_deleted)))
                 } else {
