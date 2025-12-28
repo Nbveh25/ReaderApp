@@ -77,6 +77,9 @@ dependencies {
     // Yandex Cloud Object Storage
     implementation(libs.com.amazon.ycos)
 
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -13,4 +13,3 @@ internal class GetBooksUseCaseImpl @Inject constructor(
         return bookRepository.getBooks()
     }
 }
-

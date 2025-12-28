@@ -14,7 +14,7 @@ import ru.kazan.itis.bikmukhametov.feature.books.data.util.FileStorageManager
 import ru.kazan.itis.bikmukhametov.util.enum.BookFormat
 import java.io.IOException
 
-class DownloadBookUseCaseImplTest {
+internal class DownloadBookUseCaseImplTest {
     private val bookDownloader: BookDownloader = mockk()
     private val fileStorageManager: FileStorageManager = mockk()
     private val localBookDataSource: LocalBookDataSource = mockk()
@@ -38,7 +38,6 @@ class DownloadBookUseCaseImplTest {
 
         // THEN
         assertTrue(result.isSuccess)
-        // Проверяем, что дальнейшие шаги не выполнялись
         coVerify(exactly = 0) { bookDownloader.downloadBook(any()) }
     }
 
