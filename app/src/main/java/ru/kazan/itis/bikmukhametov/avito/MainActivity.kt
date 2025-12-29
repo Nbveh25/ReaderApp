@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
                 val navigationState = rememberNavigationState(
                     startRoute = Route.Auth,
-                    topLevelRoutes = setOf(Route.Auth),
+                    topLevelRoutes = setOf(Route.Auth, Route.Books, Route.Profile),
                 )
 
                 val navigator = remember { Navigator(navigationState) }
@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         bottomBar = {
                             AppBottomNavigation(
-                                currentRoute = navigationState.startRoute,
+                                currentRoute = navigationState.topLevelRoute,
                                 onNavigate = { route ->
                                     navigator.navigate(route = route)
                                 }

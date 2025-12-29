@@ -2,6 +2,8 @@ package ru.kazan.itis.bikmukhametov.feature.reading.presentation.screen.reading
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,8 +37,16 @@ internal class ReadingViewModel @Inject constructor(
     private val saveFontSizeUseCase: SaveFontSizeUseCase,
     private val saveLineSpacingUseCase: SaveLineSpacingUseCase,
     private val saveThemeModeUseCase: SaveThemeModeUseCase,
-    private val stringResourceProvider: StringResourceProvider
+    private val stringResourceProvider: StringResourceProvider,
+    private val analytics: FirebaseAnalytics
 ) : ViewModel() {
+
+    init {
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "ReadingfScreen")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "ReadingViewModel")
+        }
+    }
 
     private val _uiState = MutableStateFlow(ReadingState())
     val uiState: StateFlow<ReadingState> = _uiState.asStateFlow()

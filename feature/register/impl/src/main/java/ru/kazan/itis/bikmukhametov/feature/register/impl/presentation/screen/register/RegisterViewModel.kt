@@ -2,6 +2,8 @@ package ru.kazan.itis.bikmukhametov.feature.register.impl.presentation.screen.re
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,8 +24,16 @@ import javax.inject.Inject
 internal class RegisterViewModel @Inject constructor(
     private val inputValidator: InputValidator,
     private val registerUseCase: RegisterUseCase,
-    private val stringResourceProvider: StringResourceProvider
+    private val stringResourceProvider: StringResourceProvider,
+    private val analytics: FirebaseAnalytics
 ) : ViewModel() {
+
+    init {
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "RegisterScreen")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "RegisterViewModel")
+        }
+    }
 
     private val _uiState = MutableStateFlow(RegisterState())
     val uiState: StateFlow<RegisterState> = _uiState.asStateFlow()

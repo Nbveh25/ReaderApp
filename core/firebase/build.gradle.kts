@@ -38,6 +38,8 @@ dependencies {
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.analytics)
+
 
     // Hilt
     implementation(libs.hilt.android)
