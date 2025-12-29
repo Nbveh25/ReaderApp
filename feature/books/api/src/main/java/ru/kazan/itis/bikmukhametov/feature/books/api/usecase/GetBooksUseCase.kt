@@ -4,6 +4,6 @@ import ru.kazan.itis.bikmukhametov.model.BookModel
 
 
 interface GetBooksUseCase {
-    suspend operator fun invoke(): List<BookModel>
+    suspend operator fun invoke(): Result<List<BookModel>>
 }
 

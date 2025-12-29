@@ -72,7 +72,7 @@ fun AuthScreen(
                 }
 
                 AuthEffect.StartGoogleSignInFlow -> {
-
+                    
                 }
             }
         }

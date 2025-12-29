@@ -30,7 +30,7 @@ internal class SaveFontSizeUseCaseImplTest {
 
 
         // WHEN
-        val result = useCase(fakeFontSize)
+        useCase(fakeFontSize)
 
         // THEN
         coVerify(exactly = 1) { readingRepository.saveFontSize(fakeFontSize) }

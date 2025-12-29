@@ -9,7 +9,7 @@ internal class GetBooksUseCaseImpl @Inject constructor(
     private val bookRepository: BookRepository
 ) : GetBooksUseCase {
 
-    override suspend fun invoke(): List<BookModel> {
+    override suspend fun invoke(): Result<List<BookModel>> {
         return bookRepository.getBooks()
     }
 }

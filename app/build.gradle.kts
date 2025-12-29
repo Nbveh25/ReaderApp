@@ -88,6 +88,10 @@ dependencies {
     // Icons
     implementation(libs.androidx.compose.material.icons)
 
+    // Firebase Crashlytics, Analytics
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

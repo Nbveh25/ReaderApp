@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
 
                 val navigator = remember { Navigator(navigationState) }
 
-
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

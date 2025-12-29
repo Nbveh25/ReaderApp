@@ -28,7 +28,7 @@ class SaveLineSpacingUseCaseImplTest {
         coEvery { readingRepository.saveLineSpacing(fakeSpacing) } just runs
 
         // WHEN
-        val result = useCase(fakeSpacing)
+        useCase(fakeSpacing)
 
         // THEN
         coVerify(exactly = 1) { readingRepository.saveLineSpacing(fakeSpacing) }

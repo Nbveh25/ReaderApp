@@ -29,12 +29,10 @@ class SaveReadingPositionUseCaseImplTest {
         coEvery { readingRepository.saveReadingPosition(fakeBookId, fakePosition) } just runs
 
         // WHEN
-        val result = useCase(fakeBookId, fakePosition)
+        useCase(fakeBookId, fakePosition)
 
         // THEN
         coVerify(exactly = 1) { readingRepository.saveReadingPosition(fakeBookId, fakePosition) }
 
     }
-
-
 }

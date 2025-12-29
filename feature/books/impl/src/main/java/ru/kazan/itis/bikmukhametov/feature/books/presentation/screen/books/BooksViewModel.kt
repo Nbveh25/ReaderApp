@@ -54,8 +54,8 @@ internal class BooksViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = null, processingBookId = null) }
 
             try {
-                val bookModels = getBooksUseCase.invoke()
-                val bookItems = BookMapper.toBookItemList(bookModels)
+                val bookModels = getBooksUseCase().getOrNull()
+                val bookItems = BookMapper.toBookItemList(bookModels ?: emptyList())
 
                 _uiState.update {
                     it.copy(
@@ -85,8 +85,8 @@ internal class BooksViewModel @Inject constructor(
             _uiState.update { it.copy(isRefreshing = true, error = null) }
 
             try {
-                val bookModels = getBooksUseCase.invoke()
-                val bookItems = BookMapper.toBookItemList(bookModels)
+                val bookModels = getBooksUseCase().getOrNull()
+                val bookItems = BookMapper.toBookItemList(bookModels ?: emptyList())
 
                 _uiState.update {
                     it.copy(

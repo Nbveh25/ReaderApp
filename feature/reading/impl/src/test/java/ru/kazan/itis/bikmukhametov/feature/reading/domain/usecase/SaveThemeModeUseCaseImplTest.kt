@@ -28,7 +28,7 @@ class SaveThemeModeUseCaseImplTest {
         coEvery { readingRepository.saveThemeMode(fakeMode) } just runs
 
         // WHEN
-        val result = useCase(fakeMode)
+        useCase(fakeMode)
 
         // THEN
         coVerify(exactly = 1) { readingRepository.saveThemeMode(fakeMode) }
