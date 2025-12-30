@@ -47,6 +47,11 @@ dependencies {
     implementation(project(":core:resources"))
     implementation(project(":feature:books:api"))
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)

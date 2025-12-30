@@ -19,7 +19,7 @@ import ru.kazan.itis.bikmukhametov.feature.books.presentation.mapper.BookMapper
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.model.BookItem
 import ru.kazan.itis.bikmukhametov.feature.books.R
 import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
-import ru.kazan.itis.bikmukhametov.feature.books.domain.usecase.DeleteBookByIdUseCase
+import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DeleteBookByIdUseCase
 import javax.inject.Inject
 
 @HiltViewModel
