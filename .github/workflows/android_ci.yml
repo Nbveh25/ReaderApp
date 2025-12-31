@@ -21,6 +21,10 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
+      # Даем права на выполнение Gradle
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       # 1. Запуск Detekt
       - name: Run Detekt
         run: ./gradlew detekt
