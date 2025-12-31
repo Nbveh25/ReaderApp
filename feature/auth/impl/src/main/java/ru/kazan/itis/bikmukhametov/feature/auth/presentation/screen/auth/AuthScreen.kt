@@ -70,7 +70,7 @@ fun AuthScreen(
                 }
 
                 AuthEffect.StartGoogleSignInFlow -> {
-                    // TODO: Реализовать запуск Google Sign-In
+
                 }
             }
         }

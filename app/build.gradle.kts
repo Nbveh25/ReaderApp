@@ -1,4 +1,3 @@
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 
 plugins {
     alias(libs.plugins.android.application)
@@ -57,12 +56,16 @@ detekt {
     allRules = false
     ignoreFailures = false
 
+
     source = files(
         rootProject.projectDir 
     )
-    
 }
 
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    exclude("**/build/**")
+    exclude("**/generated/**")
+}
 
 
 dependencies {
