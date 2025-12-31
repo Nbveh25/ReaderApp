@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.local.LocalBookDataSource
 import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
+import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DeleteBookByIdUseCase
 
 internal class DeleteBookByIdUseCaseTest {
 
@@ -21,7 +22,7 @@ internal class DeleteBookByIdUseCaseTest {
     @Before
     fun setUp() {
         bookRepository = mockk()
-        useCase = DeleteBookByIdUseCase(bookRepository)
+        useCase = DeleteBookByIdUseCaseImpl(bookRepository)
     }
 
     @Test

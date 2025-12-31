@@ -17,15 +17,15 @@ internal class GetBooksUseCaseImplTest {
     fun `should return list of books when everything is fine`() = runTest {
         // GIVEN
         val expectedBooks = listOf(createFakeBook(id = "101", title = "Kotlin in Action"))
-        coEvery { bookRepository.getBooks() } returns expectedBooks
+        coEvery { bookRepository.getBooks() } returns Result.success(expectedBooks)
 
         // WHEN
         val result = useCase.invoke()
 
         // THEN
-        assert(result.isNotEmpty())
-        assert(result.size == 1)
-        assert(result[0].id == "101")
+        assert(result.isSuccess)
+        assert(result.getOrNull() == expectedBooks)
+
 
     }
 
