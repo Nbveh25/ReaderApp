@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
                 val navigationState = rememberNavigationState(
                     startRoute = Route.Auth,
-                    topLevelRoutes = setOf(Route.Auth, Route.Books, Route.Profile),
+                    topLevelRoutes = setOf(Route.Auth, Route.Books, Route.Upload, Route.Profile),
                 )
 
                 val navigator = remember { Navigator(navigationState) }
