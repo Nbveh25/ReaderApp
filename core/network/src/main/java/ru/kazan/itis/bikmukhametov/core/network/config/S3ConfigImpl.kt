@@ -14,10 +14,10 @@ internal class S3ConfigImpl @Inject constructor(
 
     override val accessKeyId: String
         get() = BuildConfig.S3_ACCESS_KEY_ID.takeIf { it.isNotBlank() }
-            ?: throw IllegalStateException("S3_ACCESS_KEY_ID не настроен в BuildConfig")
+            ?: error("S3_ACCESS_KEY_ID не настроен в BuildConfig")
 
     override val secretAccessKey: String
         get() = BuildConfig.S3_SECRET_ACCESS_KEY.takeIf { it.isNotBlank() }
-            ?: throw IllegalStateException("S3_SECRET_ACCESS_KEY не настроен в BuildConfig")
+            ?: error("S3_SECRET_ACCESS_KEY не настроен в BuildConfig")
 }
 

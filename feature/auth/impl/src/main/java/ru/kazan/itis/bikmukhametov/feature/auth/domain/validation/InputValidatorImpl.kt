@@ -38,7 +38,6 @@ internal class InputValidatorImpl @Inject constructor() : InputValidator {
 
     companion object {
         private const val MIN_PASSWORD_LENGTH = 8
-        private const val MIN_LOGIN_PASSWORD_LENGTH = 6
         private const val SPECIAL_CHARACTERS = "!@#$%^&*()_+-="
     }
 }

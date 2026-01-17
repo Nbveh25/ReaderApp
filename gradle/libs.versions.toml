@@ -3,12 +3,12 @@ minSdk = "24"
 targetSdk = "36"
 compileSdk = "36"
 
-
-
 agp = "8.13.1"
 
 # Kotlin
 kotlin = "2.2.10"
+
+detekt = "1.23.8"
 
 # Coroutines
 coroutines = "1.10.2"
@@ -20,11 +20,11 @@ composeBom = "2025.11.00"
 androidx-core = "1.17.0"
 androidx-activityCompose = "1.11.0"
 androidx-lifecycle = "2.9.4"
-androidx-appcompat = "1.7.0"
-material = "1.12.0"
 
 # Firebase
-firebaseBom = "34.6.0"
+firebaseBom = "34.7.0"
+crashlytics-plugin = "3.0.6"
+perfomance-plugin = "2.0.2"
 
 # gms
 google-services = "4.4.4"
@@ -38,11 +38,19 @@ ksp = "2.2.10-2.0.2"
 # Hilt navigation compose
 hilt-navigation-compose = "1.3.0"
 
-# Navigation
-navigation = "2.9.6"
+# Navigation 3
+nav3Core = "1.0.0"
+kotlinSerialization = "2.1.21"
+
 
 # Okhttp
 okhttp = "5.3.2"
+
+# Retrofit
+retrofit = "3.0.0"
+
+# Room
+room = "2.8.4"
 
 # Coil
 coil = "2.7.0"
@@ -59,25 +67,28 @@ epub = "1.17.2"
 # lottie
 lottie = "6.1.0"
 
+mockk = "1.14.7"
+
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
-core = "1.17.0"
+junitJupiter = "5.8.1"
+playServicesMeasurementApi = "23.0.0"
 
 
 
 
 [libraries]
+mockk = {group = "io.mockk", name = "mockk", version.ref = "mockk"}
+
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
-androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidx-activityCompose" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -89,31 +100,44 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
+
+
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+firebase-perfomance = { group = "com.google.firebase", name = "firebase-perf" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
-
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 com-amazon-ycos = { group = "com.amazonaws", name = "aws-android-sdk-s3", version.ref = "ycos" }
 
-pdf-reader = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdf"}
+pdf-reader = { group = "com.tom-roush", name = "pdfbox-android", version.ref = "pdf" }
 
-epub-reader = {group = "org.jsoup", name = "jsoup", version.ref = "epub"}
+epub-reader = { group = "org.jsoup", name = "jsoup", version.ref = "epub" }
 
-lottie-animation = {group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie"}
+lottie-animation = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines"}
 coroutines-play-services = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
-androidx-core = { group = "androidx.core", name = "core", version.ref = "core" }
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+play-services-measurement-api = { group = "com.google.android.gms", name = "play-services-measurement-api", version.ref = "playServicesMeasurementApi" }
 
 
 
@@ -127,3 +151,7 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization"}
+firebase-crashlytics-plugin = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics-plugin" }
+firebase-perfomance-plugin = { id = "com.google.firebase.firebase-perf", version.ref = "perfomance-plugin" }

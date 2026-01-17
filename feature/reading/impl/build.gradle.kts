@@ -49,6 +49,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.play.services.measurement.api)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
@@ -75,6 +76,9 @@ dependencies {
     // EPUB reading 
     implementation(libs.epub.reader)
 
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,6 +1,5 @@
 package ru.kazan.itis.bikmukhametov.feature.books.data.datasource.remote
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient

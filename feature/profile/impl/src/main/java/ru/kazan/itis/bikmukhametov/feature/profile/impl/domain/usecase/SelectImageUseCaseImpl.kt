@@ -8,13 +8,12 @@ import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCas
 import java.io.IOException
 import javax.inject.Inject
 
+private const val MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024 // 10 МБ
+private const val MAX_FILE_SIZE_MB = MAX_FILE_SIZE_BYTES / (1024 * 1024)
+
 internal class SelectImageUseCaseImpl @Inject constructor(
     private val imageResourceProvider: ImageResourceProvider
 ) : SelectImageUseCase {
-
-    companion object {
-        private const val MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024 // 10 МБ
-    }
 
     override suspend fun invoke(imageUriString: String): Result<ImageModel> = withContext(Dispatchers.IO) {
         try {
@@ -34,7 +33,7 @@ internal class SelectImageUseCaseImpl @Inject constructor(
             // Проверяем размер файла
             if (imageBytes.size > MAX_FILE_SIZE_BYTES) {
                 return@withContext Result.failure(
-                    IOException("Файл слишком большой. Максимальный размер: ${MAX_FILE_SIZE_BYTES / (1024 * 1024)} МБ")
+                    IOException("Файл слишком большой. Максимальный размер: $MAX_FILE_SIZE_MB МБ")
                 )
             }
 

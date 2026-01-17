@@ -26,9 +26,8 @@ internal class DownloadBookUseCaseImpl @Inject constructor(
             // Скачиваем файл
             val downloadResult = bookDownloader.downloadBook(fileUrl)
             if (downloadResult.isFailure) {
-                return Result.failure(
-                    downloadResult.exceptionOrNull() ?: IOException("Ошибка загрузки")
-                )
+                return Result.failure(downloadResult.exceptionOrNull() ?:
+                IOException("Ошибка загрузки"))
             }
 
             val fileBytes = downloadResult.getOrNull() ?: return Result.failure(

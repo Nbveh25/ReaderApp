@@ -47,13 +47,20 @@ dependencies {
     implementation(project(":core:resources"))
     implementation(project(":feature:books:api"))
 
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     // Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
+    implementation(libs.play.services.measurement.api)
 
     // Hilt
     implementation(libs.hilt.android)
+    testImplementation(libs.junit.jupiter)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
@@ -77,6 +84,9 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie.animation)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

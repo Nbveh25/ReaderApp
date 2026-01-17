@@ -11,13 +11,17 @@ import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.remote.BookDownl
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.local.LocalBookDataSource
 import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.remote.RemoteBookDataSource
 import ru.kazan.itis.bikmukhametov.feature.books.api.repository.BookRepository
+import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DeleteBookByIdUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DownloadBookUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.GetBooksUseCase
+import ru.kazan.itis.bikmukhametov.feature.books.data.datasource.cache.dao.BookDao
+import ru.kazan.itis.bikmukhametov.feature.books.data.datasource.cache.database.AppDatabase
 import ru.kazan.itis.bikmukhametov.feature.books.data.datasource.local.LocalBookDataSourceImpl
 import ru.kazan.itis.bikmukhametov.feature.books.data.datasource.remote.BookDownloaderImpl
 import ru.kazan.itis.bikmukhametov.feature.books.data.datasource.remote.RemoteBookDataSourceImpl
 import ru.kazan.itis.bikmukhametov.feature.books.data.repository.BookRepositoryImpl
 import ru.kazan.itis.bikmukhametov.feature.books.data.util.FileStorageManager
+import ru.kazan.itis.bikmukhametov.feature.books.domain.usecase.DeleteBookByIdUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.books.domain.usecase.DownloadBookUseCaseImpl
 import ru.kazan.itis.bikmukhametov.feature.books.domain.usecase.GetBooksUseCaseImpl
 import javax.inject.Singleton
@@ -54,9 +58,10 @@ internal object BooksModule {
     @Singleton
     fun provideBookRepository(
         remoteBookDataSource: RemoteBookDataSource,
-        localBookDataSource: LocalBookDataSource
+        localBookDataSource: LocalBookDataSource,
+        bookDao: BookDao
     ): BookRepository {
-        return BookRepositoryImpl(remoteBookDataSource, localBookDataSource)
+        return BookRepositoryImpl(remoteBookDataSource, localBookDataSource, bookDao)
     }
 
     @Provides
@@ -83,5 +88,13 @@ internal object BooksModule {
         localBookDataSource: LocalBookDataSource
     ): DownloadBookUseCase {
         return DownloadBookUseCaseImpl(bookDownloader, fileStorageManager, localBookDataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDeleteBookByIdUseCase(
+        bookRepository: BookRepository
+    ): DeleteBookByIdUseCase {
+        return DeleteBookByIdUseCaseImpl(bookRepository)
     }
 }

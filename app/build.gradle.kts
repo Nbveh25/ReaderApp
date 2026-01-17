@@ -1,10 +1,14 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics.plugin)
 }
 
 android {
@@ -42,6 +46,28 @@ android {
     }
 }
 
+
+detekt {
+    toolVersion = libs.versions.detekt.get()
+
+    config.setFrom(files("${rootProject.projectDir}/config/detekt/detekt.yml"))
+
+    buildUponDefaultConfig = true
+    allRules = false
+    ignoreFailures = false
+
+
+    source = files(
+        rootProject.projectDir 
+    )
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    exclude("**/build/**")
+    exclude("**/generated/**")
+}
+
+
 dependencies {
     implementation(project(":core:ui"))
 
@@ -57,12 +83,17 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 
-    // Navigation
-    implementation(libs.navigation)
+    implementation(libs.androidx.navigation3.ui)
+    implementation(libs.androidx.navigation3.runtime)
 
     // Icons
     implementation(libs.androidx.compose.material.icons)
 
+    // Firebase Crashlytics, Analytics
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.perfomance)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

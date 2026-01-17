@@ -141,4 +141,3 @@ internal object ReadingModule {
         return SaveThemeModeUseCaseImpl(readingRepository)
     }
 }
-

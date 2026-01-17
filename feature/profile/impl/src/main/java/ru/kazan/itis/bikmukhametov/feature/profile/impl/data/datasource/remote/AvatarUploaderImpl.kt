@@ -17,6 +17,14 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
+private const val HTTP_UNAUTHORIZED = 401
+private const val HTTP_FORBIDDEN = 403
+private const val HTTP_NOT_FOUND = 404
+
+private const val CONNECTION_TIMEOUT_MS = 60_000   // 60 секунд
+private const val SOCKET_TIMEOUT_MS = 120_000      // 120 секунд = 2 минуты
+private const val MAX_ERROR_RETRY_COUNT = 3
+
 internal class AvatarUploaderImpl @Inject constructor(
     private val s3Config: S3Config
 ) : AvatarUploader {
@@ -33,9 +41,9 @@ internal class AvatarUploaderImpl @Inject constructor(
         )
 
         val clientConfiguration = ClientConfiguration().apply {
-            connectionTimeout = 60000
-            socketTimeout = 120000
-            maxErrorRetry = 3
+            connectionTimeout = CONNECTION_TIMEOUT_MS
+            socketTimeout = SOCKET_TIMEOUT_MS
+            maxErrorRetry = MAX_ERROR_RETRY_COUNT
         }
         
         val s3Client = AmazonS3Client(credentials, clientConfiguration)
@@ -111,9 +119,9 @@ internal class AvatarUploaderImpl @Inject constructor(
             Result.success(publicUrl)
         } catch (e: com.amazonaws.AmazonServiceException) {
             val errorMessage = when (e.statusCode) {
-                401 -> "Ошибка аутентификации. Проверьте Access Key ID и Secret Access Key"
-                403 -> "Доступ запрещен. Проверьте права доступа к бакету"
-                404 -> "Бакет не найден: ${s3Config.bucketName}"
+                HTTP_UNAUTHORIZED -> "Ошибка аутентификации. Проверьте Access Key ID и Secret Access Key"
+                HTTP_FORBIDDEN -> "Доступ запрещен. Проверьте права доступа к бакету"
+                HTTP_NOT_FOUND -> "Бакет не найден: ${s3Config.bucketName}"
                 else -> "Ошибка загрузки аватара: ${e.errorCode} - ${e.message}"
             }
             Log.e("AvatarUploaderImpl", errorMessage, e)

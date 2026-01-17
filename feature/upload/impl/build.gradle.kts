@@ -53,6 +53,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
+    implementation(libs.play.services.measurement.api)
     ksp(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)
 

@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import android.net.Uri
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.GetUserProfileUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SelectImageUseCase
 import ru.kazan.itis.bikmukhametov.feature.profile.api.usecase.SignOutUseCase
@@ -31,8 +33,16 @@ internal class ProfileViewModel @Inject constructor(
     private val uploadProfilePhotoUseCase: UploadProfilePhotoUseCase,
     private val selectImageUseCase: SelectImageUseCase,
     private val signOutUseCase: SignOutUseCase,
-    private val stringResourceProvider: StringResourceProvider
+    private val stringResourceProvider: StringResourceProvider,
+    private val analytics: FirebaseAnalytics
 ) : ViewModel() {
+
+    init {
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "ProfileScreen")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "ProfileViewModel")
+        }
+    }
 
     private val _uiState = MutableStateFlow(ProfileState())
     val uiState: StateFlow<ProfileState> = _uiState.asStateFlow()

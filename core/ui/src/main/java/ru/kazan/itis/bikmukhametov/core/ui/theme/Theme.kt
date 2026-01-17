@@ -14,6 +14,18 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.AppPrimary
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.AppPrimaryDark
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.DarkBackground
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.LightBackground
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.OnBackgroundDark
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.OnBackgroundLight
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.OnPrimaryDark
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.OnPrimaryLight
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.SurfaceDark
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.SurfaceLight
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.SurfaceVariantDark
+import ru.kazan.itis.bikmukhametov.core.ui.theme.Color.SurfaceVariantLight
 
 private val DarkColorScheme = darkColorScheme(
     primary = AppPrimaryDark, // Используем бирюзовый акцент

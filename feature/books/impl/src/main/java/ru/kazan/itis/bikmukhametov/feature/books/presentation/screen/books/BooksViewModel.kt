@@ -2,6 +2,8 @@ package ru.kazan.itis.bikmukhametov.feature.books.presentation.screen.books
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.logEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,22 +13,30 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import ru.kazan.itis.bikmukhametov.feature.books.api.datasource.local.LocalBookDataSource
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DownloadBookUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.GetBooksUseCase
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.mapper.BookMapper
 import ru.kazan.itis.bikmukhametov.feature.books.presentation.model.BookItem
 import ru.kazan.itis.bikmukhametov.feature.books.R
 import ru.kazan.itis.bikmukhametov.core.resources.string.StringResourceProvider
+import ru.kazan.itis.bikmukhametov.feature.books.api.usecase.DeleteBookByIdUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 internal class BooksViewModel @Inject constructor(
     private val getBooksUseCase: GetBooksUseCase,
     private val downloadBookUseCase: DownloadBookUseCase,
-    private val localBookDataSource: LocalBookDataSource,
-    private val stringResourceProvider: StringResourceProvider
+    private val deleteBookByIdUseCase: DeleteBookByIdUseCase,
+    private val stringResourceProvider: StringResourceProvider,
+    private val analytics: FirebaseAnalytics
 ) : ViewModel() {
+
+    init {
+        analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+            param(FirebaseAnalytics.Param.SCREEN_NAME, "BooksScreen")
+            param(FirebaseAnalytics.Param.SCREEN_CLASS, "BooksViewModel")
+        }
+    }
 
     private val _uiState = MutableStateFlow(BooksState())
     val uiState: StateFlow<BooksState> = _uiState.asStateFlow()
@@ -54,8 +64,8 @@ internal class BooksViewModel @Inject constructor(
             _uiState.update { it.copy(isLoading = true, error = null, processingBookId = null) }
 
             try {
-                val bookModels = getBooksUseCase.invoke()
-                val bookItems = BookMapper.toBookItemList(bookModels)
+                val bookModels = getBooksUseCase().getOrNull()
+                val bookItems = BookMapper.toBookItemList(bookModels ?: emptyList())
 
                 _uiState.update {
                     it.copy(
@@ -85,8 +95,8 @@ internal class BooksViewModel @Inject constructor(
             _uiState.update { it.copy(isRefreshing = true, error = null) }
 
             try {
-                val bookModels = getBooksUseCase.invoke()
-                val bookItems = BookMapper.toBookItemList(bookModels)
+                val bookModels = getBooksUseCase().getOrNull()
+                val bookItems = BookMapper.toBookItemList(bookModels ?: emptyList())
 
                 _uiState.update {
                     it.copy(
@@ -141,9 +151,9 @@ internal class BooksViewModel @Inject constructor(
             _uiState.update { it.copy(processingBookId = bookId) }
 
             try {
-                val deleted = localBookDataSource.deleteBook(bookId)
+                val deleted = deleteBookByIdUseCase(bookId)
 
-                if (deleted) {
+                if (deleted.getOrNull() == true) {
                     loadBooks()
                     _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(R.string.books_message_book_deleted)))
                 } else {
@@ -183,7 +193,7 @@ internal class BooksViewModel @Inject constructor(
                 }
 
                 // Скачиваем книгу из Yandex Cloud Storage
-                val downloadResult = downloadBookUseCase.invoke(bookId, fileUrl)
+                val downloadResult = downloadBookUseCase(bookId, fileUrl)
 
                 if (downloadResult.isSuccess) {
                     // Перезагружаем список для синхронизации с репозиторием
@@ -193,19 +203,15 @@ internal class BooksViewModel @Inject constructor(
                     val error = downloadResult.exceptionOrNull()
                     _uiState.update { it.copy(processingBookId = null) }
                     _effect.emit(
-                        BooksEffect.ShowMessage(
-                            error?.message ?: stringResourceProvider.getString(R.string.books_error_download_failed)
-                        )
+                        BooksEffect.ShowMessage(error?.message ?: stringResourceProvider.getString(R.string.books_error_download_failed))
                     )
                 }
             } catch (e: Exception) {
                 _uiState.update { it.copy(processingBookId = null) }
-                _effect.emit(BooksEffect.ShowMessage(
-                    stringResourceProvider.getString(
+                _effect.emit(BooksEffect.ShowMessage(stringResourceProvider.getString(
                         R.string.books_error_download_with_message,
                         e.message ?: ""
-                    )
-                ))
+                    )))
             }
         }
     }

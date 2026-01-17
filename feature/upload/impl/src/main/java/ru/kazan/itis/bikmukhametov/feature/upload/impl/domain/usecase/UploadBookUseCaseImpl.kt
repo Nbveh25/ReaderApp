@@ -10,6 +10,11 @@ import javax.inject.Inject
 /**
  * Реализация use case для загрузки книги.
  */
+
+private const val PROGGRESS_FIRST_STAGE = 0.9f;
+private const val PROGGRESS_SECOND_STAGE = 0.95f;
+private const val PROGGRESS_THIRD_STAGE = 1.0f;
+
 internal class UploadBookUseCaseImpl @Inject constructor(
     private val bookUploader: BookUploader,
     private val bookRepository: BookRepository
@@ -31,7 +36,7 @@ internal class UploadBookUseCaseImpl @Inject constructor(
             userId = userId,
             onProgress = { progress ->
                 // Прогресс загрузки (0.0 - 0.9)
-                onProgress(progress * 0.9f)
+                onProgress(progress * PROGGRESS_FIRST_STAGE)
             }
         )
 
@@ -47,7 +52,7 @@ internal class UploadBookUseCaseImpl @Inject constructor(
         val format = fileName.substringAfterLast('.', "").lowercase()
 
         // Сохраняем метаданные в Firestore
-        onProgress(0.95f)
+        onProgress(PROGGRESS_SECOND_STAGE)   // TODO(workManager настроить)
 
         val metadata = BookMetadata(
             title = title,
@@ -65,7 +70,7 @@ internal class UploadBookUseCaseImpl @Inject constructor(
             return saveResult
         }
 
-        onProgress(1.0f)
+        onProgress(PROGGRESS_THIRD_STAGE) // TODO()
 
         return Result.success(Unit)
     }
