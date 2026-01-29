@@ -3,7 +3,7 @@
     <!-- Auth Screen -->
     <string name="auth_title">Вход</string>
     <string name="auth_registration_action">Регистрация</string>
-    <string name="auth_brand_title">Avito</string>
+    <string name="auth_brand_title">ReadEra</string>
     <string name="email_label">Email</string>
     <string name="password_label">Пароль</string>
     <string name="error_invalid_email">Некорректный email</string>
